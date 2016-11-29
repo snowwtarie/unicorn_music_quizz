@@ -1,4 +1,5 @@
 # IntelliJ project files
 /.idea
 /out
-gen
+*.iml
+*.gitignore
