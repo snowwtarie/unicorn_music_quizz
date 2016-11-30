@@ -11,26 +11,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-class PlaylistDeserializer implements JsonDeserializer<ArrayList<Track>>
-{
-    @Override
-    public ArrayList<Track> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-
-        ArrayList<Track> tracks = new ArrayList<Track>();
-
-        JsonObject jObjectPlaylist = json.getAsJsonObject();
-        JsonArray jArrayData = jObjectPlaylist.get("data").getAsJsonArray();
-
-        for (JsonElement jsonElementTrack : jArrayData) {
-            JsonObject jObjectTrack = jsonElementTrack.getAsJsonObject();
-            JsonObject jArrayArtist = jObjectTrack.get("artist").getAsJsonObject();
-            tracks.add(new Track(jObjectTrack.get("id").getAsInt(), jObjectTrack.get("preview").getAsString(), jObjectTrack.get("title").getAsString(), jArrayArtist.get("name").getAsString()));
-        }
-
-        return tracks;
-    }
-}
-
 public class DeezerAPI {
     private long idPlaylist;
 
@@ -39,7 +19,7 @@ public class DeezerAPI {
         this.idPlaylist = p_idPlaylist;
     }
 
-    public void getListTrack() throws IOException {
+    public ArrayList<Track> getListTrack() throws IOException {
         String jsonInString = callApi("playlist/"+this.idPlaylist+"/tracks");
 
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -48,9 +28,7 @@ public class DeezerAPI {
         Gson gson = gsonBuilder.create();
         ArrayList<Track> tracks = gson.fromJson(jsonInString, ArrayList.class);
 
-        for (Track track : tracks)
-            System.out.println(track);
-
+        return tracks;
     }
 
     private String callApi(String URI) throws IOException {
@@ -74,5 +52,25 @@ public class DeezerAPI {
         httpClient.getConnectionManager().shutdown();
 
         return json;
+    }
+}
+
+class PlaylistDeserializer implements JsonDeserializer<ArrayList<Track>> {
+
+    @Override
+    public ArrayList<Track> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+
+        ArrayList<Track> tracks = new ArrayList<Track>();
+
+        JsonObject jObjectPlaylist = json.getAsJsonObject();
+        JsonArray jArrayData = jObjectPlaylist.get("data").getAsJsonArray();
+
+        for (JsonElement jsonElementTrack : jArrayData) {
+            JsonObject jObjectTrack = jsonElementTrack.getAsJsonObject();
+            JsonObject jArrayArtist = jObjectTrack.get("artist").getAsJsonObject();
+            tracks.add(new Track(jObjectTrack.get("id").getAsInt(), jObjectTrack.get("preview").getAsString(), jObjectTrack.get("title").getAsString(), jArrayArtist.get("name").getAsString()));
+        }
+
+        return tracks;
     }
 }
