@@ -17,10 +17,10 @@ public class PanelCardSide extends JPanel {
     private final CardLayout cardLayout;
 
     public PanelCardSide(){
-        ArrayList<String> joueurs = (ArrayList<String>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
+
         cardLayout = new CardLayout();
-        this.add(new PanelSideReady(joueurs));
-        this.add(new PanelSideScore(joueurs));
+        this.add(new PanelSideReady());
+        this.add(new PanelSideScore());
         this.setLayout(cardLayout);
         this.setVisible(true);
 

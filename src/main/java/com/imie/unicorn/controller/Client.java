@@ -28,8 +28,10 @@ public class Client {
             test.add("Amzha");
             test.add("Mathieu");
             return new Message("InitOtherPlayer", test);
+        }else if(message.getKey().equals("Connexion")){
+            return new Message("Connexion", true);
         }else if(message.getKey().equals("Ready")){
-
+            return new Message("Ready", true);
         }
 
         return null;
