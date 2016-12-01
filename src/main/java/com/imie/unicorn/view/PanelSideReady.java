@@ -18,7 +18,7 @@ public class PanelSideReady extends JPanel implements ActionListener {
 
 
     public PanelSideReady(){
-        ArrayList<String> joueurs = (ArrayList<String>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
+        HashMap<String, Object> joueurs = (HashMap<String, Object>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
 
         this.setLayout(new GridLayout(0,2));
         this.add(new JLabel("Pseudo"));
@@ -26,8 +26,6 @@ public class PanelSideReady extends JPanel implements ActionListener {
         this.add(new JLabel("You"));
         this.add(readyBox);
         readyBox.addActionListener(this);
-
-
         int i;
         for (i=0; i<joueurs.size(); i++){
             this.add(createJoueurLabel(joueurs.get(i).toString()));

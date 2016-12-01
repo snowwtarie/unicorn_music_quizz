@@ -23,16 +23,13 @@ public class Client {
 
     public Message getRequest(Message message) {
         if (message.getKey().equals("InitOtherPlayer")) {
-
             HashMap<String, Object> test = new HashMap<String, Object>();
-
             return new Message("InitOtherPlayer", test);
         }else if(message.getKey().equals("Connexion")){
             return new Message("Connexion", true);
         }else if(message.getKey().equals("Ready")){
             return new Message("Ready", true);
         }
-
         return null;
     }
 
