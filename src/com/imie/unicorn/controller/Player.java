@@ -7,16 +7,14 @@ public class Player {
 
     private String id;
     private String ip;
-    private String name;
-    private String surname;
+    private String pseudo;
     private int score;
     private Boolean isReady;
 
-    public Player(String ip, String name, String surname, int score, Boolean isReady){
-        this.id = name.concat(ip);
+    public Player(String ip, String pseudo, int score, Boolean isReady){
+        this.id = pseudo.concat(ip);
         this.ip = ip;
-        this.name = name;
-        this.surname = surname;
+        this.pseudo = pseudo;
         this.score = score;
         this.isReady = isReady;
     }
@@ -36,21 +34,14 @@ public class Player {
         this.ip = ip;
     }
 
-    public String getName() {
-        return name;
+    public String getPseudo() {
+        return pseudo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
 
     public int getScore() {
         return score;

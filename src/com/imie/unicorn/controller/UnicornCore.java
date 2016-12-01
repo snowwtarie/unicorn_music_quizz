@@ -1,6 +1,6 @@
 package com.imie.unicorn.controller;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -9,59 +9,67 @@ import java.util.*;
 public class UnicornCore {
 
     private HashMap<String, Player> playerList;
-    private ArrayList<Track> trackList;
-    private PlayerMp3 playerMp3;
-    private Boolean nextSong;
+    private List<Track> listTrack;
+    private Track currentTrack;
+    private static final int idPlaylist = 908622995;
+    private boolean nextTrack;
 
-    public UnicornCore() {
+    public UnicornCore() throws IOException {
         this.playerList = new HashMap<String, Player>();
-        this.playerMp3 = null;
         this.startGame();
     }
 
-    private void startGame() {
-        //liste de chanson de test
-        trackList.add(new Track("Daft Punk", "Harder Better Faster Stronger", "http://cdn-preview-5.deezer.com/stream/51afcde9f56a132096c0496cc95eb24b-4.mp3"));
-        trackList.add(new Track("Daft Punk", "Harder Better Faster Stronger", "http://cdn-preview-5.deezer.com/stream/51afcde9f56a132096c0496cc95eb24b-4.mp3"));
+    private void startGame() throws IOException {
+
+        this.getListTrack(idPlaylist);
 
         while(!this.checkIfAllReady()) {
         }
 
+        for(Track track: listTrack){
+            this.currentTrack = track;
+            GameTimer gameTimer = new GameTimer(2000);
 
+            System.out.println("piste suivante");
+        }
     }
-
-    public void addPlayer(Player player){
-        this.playerList.put(player.getId(), player);
-    }
-
-    public void removePlayer(Player player){
-        this.playerList.remove(player);
+    private void getListTrack(int idPlaylist) throws IOException {
+        DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
+        this.listTrack = deezerAPI.getListTrack();
     }
 
     private boolean checkIfAllReady(){
-        for(Map.Entry<String, Player> p : this.playerList.entrySet()) {
-            if (p.getValue().getIsReady())
-                return false;
+        if (playerList.size() < 1) {
+            for(Map.Entry<String, Player> p : this.playerList.entrySet()) {
+                if (p.getValue().getIsReady())
+                    return false;
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void checkProposition(String proposition, String idPlayer){
-        Boolean checkSong = proposition.equals(playerMp3.getCurrentTrack().getTitle());
-        Boolean checkArtist = proposition.equals(playerMp3.getCurrentTrack().getArtist());
+        Boolean checkSong = proposition.equals(currentTrack.getTitle());
+        Boolean checkArtist = proposition.equals(currentTrack.getArtist());
 
         if(checkSong || checkArtist){
             int actualScore = playerList.get(idPlayer).getScore();
             playerList.get(idPlayer).setScore(actualScore + 1);
-            this.nextSong = true;
+            this.nextTrack = true;
         }
+        this.nextTrack = false;
     }
 
-    public void receiveMessage(Message message){
-
-        /*switch(message){
-
-        }*/
+    public String getCurrentUrlTrack(){
+        return currentTrack.getPreview();
     }
 
+    public HashMap<String, Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(HashMap<String, Player> playerList) {
+        this.playerList = playerList;
+    }
 }
