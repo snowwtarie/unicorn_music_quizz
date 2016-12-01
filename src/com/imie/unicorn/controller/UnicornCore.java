@@ -13,14 +13,13 @@ public class UnicornCore {
     private PlayerMp3 playerMp3;
     private Boolean nextSong;
 
-    public UnicornCore() throws InterruptedException, MalformedURLException {
+    public UnicornCore() {
         this.playerList = new HashMap<String, Player>();
         this.playerMp3 = null;
-        this.nextSong = false;
         this.startGame();
     }
 
-    private void startGame() throws MalformedURLException, InterruptedException {
+    private void startGame() {
         //liste de chanson de test
         trackList.add(new Track("Daft Punk", "Harder Better Faster Stronger", "http://cdn-preview-5.deezer.com/stream/51afcde9f56a132096c0496cc95eb24b-4.mp3"));
         trackList.add(new Track("Daft Punk", "Harder Better Faster Stronger", "http://cdn-preview-5.deezer.com/stream/51afcde9f56a132096c0496cc95eb24b-4.mp3"));
@@ -56,6 +55,13 @@ public class UnicornCore {
             playerList.get(idPlayer).setScore(actualScore + 1);
             this.nextSong = true;
         }
+    }
+
+    public void receiveMessage(Message message){
+
+        /*switch(message){
+
+        }*/
     }
 
 }
