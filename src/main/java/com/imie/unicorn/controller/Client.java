@@ -4,6 +4,7 @@ package com.imie.unicorn.controller;
 import com.imie.unicorn.view.Message;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Client {
 
@@ -23,6 +24,7 @@ public class Client {
     public Message getRequest(Message message) {
         if (message.getKey().equals("InitOtherPlayer")) {
 
+            HashMap<String, Object> test = new HashMap<String, Object>();
             ArrayList<String> test = new ArrayList<String>();
             test.add("Marius");
             test.add("Amzha");

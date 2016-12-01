@@ -1,5 +1,7 @@
 package com.imie.unicorn.view;
 
+import com.imie.unicorn.controller.Client;
+
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
@@ -16,7 +18,6 @@ public class JFenetre extends JFrame {
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.setSize(new DimensionUIResource(1210, 800));
         this.setBackground(Color.BLACK);
-        this.add(new PanelMenu());
         this.setVisible(true);
         this.setLocationRelativeTo ( null ) ;
         this.setResizable(false);
@@ -26,13 +27,15 @@ public class JFenetre extends JFrame {
 
     }
 
-    public static void connexionServer(){
-        JFenetre.instance.setContentPane(new PanelBorder());
-        JFenetre.instance.setVisible(true);
-    }
-
     public static void main(String args []) {
         getInstance();
+        JOptionPane jOptionPane = new JOptionPane();
+        String pseudo = jOptionPane.showInputDialog(null, "Veuillez saisir votre pseudo", "Unicorn Pseudo", JOptionPane.QUESTION_MESSAGE);
+        boolean connexion = (Boolean) Client.getClient().getRequest(new Message("Connexion", pseudo)).getValue();
+        if (connexion) {
+            JFenetre.instance.setContentPane(new PanelBorder());
+            JFenetre.instance.setVisible(true);
+        }
     }
 
     public static JFenetre getInstance(){
