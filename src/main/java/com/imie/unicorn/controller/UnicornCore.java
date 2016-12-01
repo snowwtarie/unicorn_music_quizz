@@ -26,12 +26,19 @@ public class UnicornCore {
         while(!this.checkIfAllReady()) {
         }
 
+        GameTimer gameTimer = new GameTimer(5000);
+        gameTimer.start();
+        if(gameTimer.getState() == Thread.State.TERMINATED){
+            System.out.println("fin du timer");
+        }
+
+
+/*
         for(Track track: listTrack){
             this.currentTrack = track;
-            GameTimer gameTimer = new GameTimer(2000);
 
             System.out.println("piste suivante");
-        }
+        }*/
     }
     private void getListTrack(int idPlaylist) throws IOException {
         DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
@@ -39,7 +46,7 @@ public class UnicornCore {
     }
 
     private boolean checkIfAllReady(){
-        if (playerList.size() < 1) {
+        if (playerList.size() > 1) {
             for(Map.Entry<String, Player> p : this.playerList.entrySet()) {
                 if (p.getValue().getIsReady())
                     return false;
