@@ -3,23 +3,24 @@ package com.imie.unicorn.model;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 
 public class ThreadServeur extends Thread {
 
-    private Socket client;
+    private ServerSocket serveur;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private ServeurInterface serveurInterface;
 
-    public ThreadServeur(Socket client, ServeurInterface serveurInterface) throws IOException {
+    public ThreadServeur(ServerSocket serveur, ServeurInterface serveurInterface, Socket client) throws IOException {
         super();
-        this.client = client;
+        this.serveur = serveur;
         this.serveurInterface = serveurInterface;
-        this.oos = new ObjectOutputStream(this.client.getOutputStream());
+        this.oos = new ObjectOutputStream(client.getOutputStream());
         this.oos.flush();
-        this.ois = new ObjectInputStream(this.client.getInputStream());
+        this.ois = new ObjectInputStream(client.getInputStream());
     }
 
     @Override
@@ -41,8 +42,8 @@ public class ThreadServeur extends Thread {
         this.getOos().flush();
     }
 
-    public Socket getClient() {
-        return this.client;
+    public ServerSocket getServeur() {
+        return this.serveur;
     }
 
     public ObjectOutputStream getOos() {
