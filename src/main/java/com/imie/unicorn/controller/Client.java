@@ -25,10 +25,7 @@ public class Client {
         if (message.getKey().equals("InitOtherPlayer")) {
 
             HashMap<String, Object> test = new HashMap<String, Object>();
-            ArrayList<String> test = new ArrayList<String>();
-            test.add("Marius");
-            test.add("Amzha");
-            test.add("Mathieu");
+
             return new Message("InitOtherPlayer", test);
         }else if(message.getKey().equals("Connexion")){
             return new Message("Connexion", true);
