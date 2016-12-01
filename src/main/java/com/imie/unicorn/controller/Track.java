@@ -5,18 +5,22 @@ public class Track {
     private String preview;
     private String title;
     private String artist;
+    private String albumPicture;
 
-    public Track(String preview, String title, String artist) {
+    public Track(String preview, String title, String artist, String albumPicture) {
         this.preview = preview;
         this.title = title;
         this.artist = artist;
+        this.albumPicture = albumPicture;
+
     }
 
-    public Track(int id, String preview, String title, String artist) {
+    public Track(int id, String preview, String title, String artist, String albumPicture) {
         this.id = id;
         this.preview = preview;
         this.title = title;
         this.artist = artist;
+        this.albumPicture = albumPicture;
     }
 
     public int getId() {
@@ -51,6 +55,14 @@ public class Track {
         this.artist = artist;
     }
 
+    public String getAlbumPicture() {
+        return albumPicture;
+    }
+
+    public void setAlbumPicture(String albumPicture) {
+        this.albumPicture = albumPicture;
+    }
+
     @Override
     public String toString() {
         return "Track{" +
@@ -58,6 +70,7 @@ public class Track {
                 ", preview='" + preview + '\'' +
                 ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
+                ", albumPicture='" + albumPicture + '\'' +
                 '}';
     }
 }
