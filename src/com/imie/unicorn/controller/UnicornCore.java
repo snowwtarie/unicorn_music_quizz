@@ -48,8 +48,8 @@ public class UnicornCore {
     }
 
     public void checkProposition(String proposition, String idPlayer){
-        Boolean checkSong = proposition.equals(playerMp3.getCurrentTrack().song);
-        Boolean checkArtist = proposition.equals(playerMp3.getCurrentTrack().artist);
+        Boolean checkSong = proposition.equals(playerMp3.getCurrentTrack().getTitle());
+        Boolean checkArtist = proposition.equals(playerMp3.getCurrentTrack().getArtist());
 
         if(checkSong || checkArtist){
             int actualScore = playerList.get(idPlayer).getScore();

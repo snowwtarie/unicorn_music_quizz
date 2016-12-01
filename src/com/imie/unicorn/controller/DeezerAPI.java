@@ -57,7 +57,6 @@ public class DeezerAPI {
 
 class PlaylistDeserializer implements JsonDeserializer<ArrayList<Track>> {
 
-    @Override
     public ArrayList<Track> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
         ArrayList<Track> tracks = new ArrayList<Track>();

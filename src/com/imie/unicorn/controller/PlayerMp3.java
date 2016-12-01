@@ -24,7 +24,7 @@ public class PlayerMp3 extends Thread{
     public PlayerMp3(Track track) throws MalformedURLException {
         this.currentTrack = track;
         this.player = new MP3Player();
-        player.addToPlayList(new URL(track.getUrl()));
+        player.addToPlayList(new URL(track.getPreview()));
     }
 
     public void play() throws InterruptedException {
