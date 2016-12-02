@@ -85,7 +85,7 @@ public class UnicornCore {
 
 
         if(!checkProposition("artist", proposition)){
-            if(!checkProposition("artist", proposition)){
+            if(!checkProposition("title", proposition)){
                 System.out.println("Perdu ! ");
             }
         }
