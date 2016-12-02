@@ -1,5 +1,8 @@
 package com.imie.unicorn.view;
 
+import com.imie.unicorn.controller.Client;
+import com.imie.unicorn.controller.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -9,21 +12,17 @@ import java.util.*;
  * Contenu par le PanelCardSide / Panel Joueur-Score
  */
 public class PanelSideScore extends JPanel{
+    private String ipLocale;
+
     public PanelSideScore(){
-        this.setLayout(new GridLayout(0,2));
-        this.add(new JLabel("Pseudo"));
-        this.add(new JLabel("Score"));
-    }
-
-    public PanelSideScore(java.util.List j){
+        HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
         this.setLayout(new GridLayout(0,2));
         this.add(new JLabel("Pseudo"));
         this.add(new JLabel("Score"));
 
-        int i;
-        for (i=0; i<j.size(); i++){
-            this.add(createJoueurLabel(j.get(i).toString()));
-            this.add(new JLabel("0"));
+        for(Map.Entry<String, Player> p : joueurs.entrySet()) {
+            this.add(createJoueurLabel(p.getValue().getPseudo()));
+            this.add(new JLabel(String.valueOf(p.getValue().getScore())));
         }
     }
 

@@ -8,11 +8,11 @@ import java.awt.*;
  * Layout Secondaire / WEST SIDE du Layout Principal
  */
 public class PanelCardMain extends JPanel {
-    private final CardLayout cardLayout;
+    public final CardLayout cardLayout = new CardLayout();;
 
     public PanelCardMain(){
-        cardLayout = new CardLayout();
+        this.setLayout(cardLayout);
         this.add(new PanelMainWait());
-
+        this.add(new PanelMainInfoTrack());
     }
 }

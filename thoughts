@@ -1,0 +1,2 @@
+Fonctionnement Serveur
+    Reçoit une connection -> créé un ThreadServeur -> fourni le socket Client

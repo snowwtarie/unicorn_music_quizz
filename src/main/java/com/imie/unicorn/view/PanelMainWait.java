@@ -2,6 +2,9 @@ package com.imie.unicorn.view;
 
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -9,11 +12,16 @@ import javax.swing.plaf.DimensionUIResource;
  */
 public class PanelMainWait extends JPanel {
     public PanelMainWait(){
-        JLabel label = new JLabel("En Attente des Joueurs <3");
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 100,0));
+        Icon waitUnicorn = new ImageIcon(getClass().getClassLoader().getResource("Unicorn.jpg"));
+        JLabel label = new JLabel(waitUnicorn);
+        JLabel titre = new JLabel("<html><br><br>Unicorn Music Quizz<br><br></html>");
+        titre.setFont(JFenetre.unicornFont);
+        this.setPreferredSize(new DimensionUIResource(850,900));
+        this.setBackground(Color.WHITE);
+        this.add(titre);
         this.add(label);
-        this.setPreferredSize(new DimensionUIResource(200, 200));
-        label.setAlignmentX(0.5f);
-        label.setAlignmentY(0.5f);
         this.setVisible(true);
     }
+
 }
