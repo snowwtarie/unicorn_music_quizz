@@ -5,6 +5,8 @@ import com.imie.unicorn.controller.Client;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,10 +14,11 @@ import java.io.IOException;
  * Created by Stibo on 30/11/2016.
  * Fenetre Principale
  */
-public class JFenetre extends JFrame {
+public class JFenetre extends JFrame implements KeyListener {
     private static JFenetre instance = new JFenetre();
     public static Font robotoFont;
     public static Font unicornFont;
+    private static PanelBorder panelBorder;
 
     private JFenetre(){
         this.setTitle ("Unicorn Music Quizzz");
@@ -25,7 +28,7 @@ public class JFenetre extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo ( null ) ;
         this.setResizable(false);
-
+        this.addKeyListener(this);
 
     }
 
@@ -67,7 +70,7 @@ public class JFenetre extends JFrame {
         String pseudo = jOptionPane.showInputDialog(null, "Veuillez saisir votre pseudo", "Unicorn Pseudo", JOptionPane.QUESTION_MESSAGE);
         boolean connexion = (Boolean) Client.getClient().getRequest(new Message("Connexion", pseudo)).getValue();
         if (connexion) {
-            PanelBorder panelBorder = new PanelBorder();
+            panelBorder = new PanelBorder();
             JFenetre.instance.setContentPane(panelBorder);
             JFenetre.instance.setVisible(true);
         }
@@ -77,4 +80,26 @@ public class JFenetre extends JFrame {
         return JFenetre.instance;
     }
 
+    public static PanelBorder getPanelBorder() {
+        return panelBorder;
+    }
+
+    public void switchtoGame(){
+        PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switchtoGame();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }

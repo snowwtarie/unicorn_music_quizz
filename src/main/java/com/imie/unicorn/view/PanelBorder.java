@@ -10,10 +10,24 @@ import java.awt.*;
  */
 public class PanelBorder extends JPanel {
 
+    private static PanelCardMain panelCardMain;
+    private static PanelCardSide panelCardSide;
+
+    public static PanelCardMain getPanelCardMain() {
+        return panelCardMain;
+    }
+
+    public static PanelCardSide getPanelCardSide() {
+        return panelCardSide;
+    }
+
     public PanelBorder(){
+        panelCardMain = new PanelCardMain();
+        panelCardSide = new PanelCardSide();
+
         this.setLayout(new BorderLayout());
-        this.add(new PanelCardMain(), BorderLayout.WEST);
-        this.add(new PanelCardSide(), BorderLayout.EAST);
+        this.add(panelCardMain, BorderLayout.WEST);
+        this.add(panelCardSide, BorderLayout.EAST);
 
         this.getComponent(0).setBackground(Color.WHITE);
         this.getComponent(0).setPreferredSize(new DimensionUIResource(850, 800));

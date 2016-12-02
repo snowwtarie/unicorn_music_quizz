@@ -39,8 +39,6 @@ public class PanelMainInfoTrack extends JPanel {
             e.printStackTrace();
         }
 
-        System.out.println("Present Project Directory : "+ System.getProperty("user.dir"));
-
         ImageIcon visuel = new ImageIcon(img);
         JLabel trackVisuel = new JLabel(visuel);
         trackTitle.setPreferredSize(new DimensionUIResource(500,100));
