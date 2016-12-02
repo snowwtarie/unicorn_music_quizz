@@ -25,9 +25,7 @@ public class JFenetre extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo ( null ) ;
         this.setResizable(false);
-    }
 
-    public void init() {
 
     }
 
@@ -69,7 +67,8 @@ public class JFenetre extends JFrame {
         String pseudo = jOptionPane.showInputDialog(null, "Veuillez saisir votre pseudo", "Unicorn Pseudo", JOptionPane.QUESTION_MESSAGE);
         boolean connexion = (Boolean) Client.getClient().getRequest(new Message("Connexion", pseudo)).getValue();
         if (connexion) {
-            JFenetre.instance.setContentPane(new PanelBorder());
+            PanelBorder panelBorder = new PanelBorder();
+            JFenetre.instance.setContentPane(panelBorder);
             JFenetre.instance.setVisible(true);
         }
     }

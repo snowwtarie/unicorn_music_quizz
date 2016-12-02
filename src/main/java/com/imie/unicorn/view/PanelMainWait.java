@@ -3,6 +3,8 @@ package com.imie.unicorn.view;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -21,4 +23,5 @@ public class PanelMainWait extends JPanel {
         this.add(label);
         this.setVisible(true);
     }
+
 }

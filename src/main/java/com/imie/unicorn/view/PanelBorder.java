@@ -9,6 +9,7 @@ import java.awt.*;
  * Layout Principal de JFenetre
  */
 public class PanelBorder extends JPanel {
+
     public PanelBorder(){
         this.setLayout(new BorderLayout());
         this.add(new PanelCardMain(), BorderLayout.WEST);
@@ -20,4 +21,6 @@ public class PanelBorder extends JPanel {
         this.getComponent(1).setBackground(Color.BLUE);
         this.getComponent(1).setPreferredSize(new DimensionUIResource(350, 800));
     }
+
+
 }

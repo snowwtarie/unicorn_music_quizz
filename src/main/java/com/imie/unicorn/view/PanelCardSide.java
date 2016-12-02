@@ -17,12 +17,9 @@ public class PanelCardSide extends JPanel {
     private final CardLayout cardLayout;
 
     public PanelCardSide(){
-
         cardLayout = new CardLayout();
         this.add(new PanelSideReady());
         this.add(new PanelSideScore());
-        this.setLayout(cardLayout);
         this.setVisible(true);
-
     }
 }

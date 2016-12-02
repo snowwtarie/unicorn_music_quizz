@@ -9,11 +9,9 @@ import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 
 /**
  * Created by Stibo on 1/12/2016.
