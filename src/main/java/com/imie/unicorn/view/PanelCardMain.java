@@ -12,7 +12,9 @@ public class PanelCardMain extends JPanel {
 
     public PanelCardMain(){
         cardLayout = new CardLayout();
+
         this.add(new PanelMainWait());
+        this.add(new PanelMainInfoTrack());
 
     }
 }
