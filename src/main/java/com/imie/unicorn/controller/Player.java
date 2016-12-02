@@ -5,27 +5,28 @@ package com.imie.unicorn.controller;
  */
 public class Player {
 
-    private String id;
+    private String idPlayer;
     private String ip;
     private String pseudo;
     private int score;
     private Boolean isReady;
 
     public Player(String ip, String pseudo, int score, Boolean isReady){
-        this.id = pseudo.concat(ip);
+        this.idPlayer = pseudo.concat(ip);
         this.ip = ip;
         this.pseudo = pseudo;
         this.score = score;
         this.isReady = isReady;
     }
 
-    public String getId() {
-        return id;
+    public String getIdPlayer() {
+        return idPlayer;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdPlayer(String idPlayer) {
+        this.idPlayer = idPlayer;
     }
+
     public String getIp() {
         return ip;
     }
@@ -57,5 +58,16 @@ public class Player {
 
     public void setIsReady(Boolean ready) {
         isReady = ready;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + idPlayer +
+                ", ip='" + ip + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", score='" + score + '\'' +
+                ", isReady='" + isReady + '\'' +
+                '}';
     }
 }
