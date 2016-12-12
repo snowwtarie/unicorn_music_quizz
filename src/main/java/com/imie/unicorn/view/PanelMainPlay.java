@@ -81,7 +81,9 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_ENTER){
+            Boolean trackFound = (Boolean) Client.getClient().getRequest(new Message("Song", jProposition.getText())).getValue();
+        }
     }
 
     @Override
