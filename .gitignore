@@ -4,3 +4,4 @@
 .gitignore
 src/main/java/com/imie/unicorn/model/ClientTest.java
 thoughts
+*.iml

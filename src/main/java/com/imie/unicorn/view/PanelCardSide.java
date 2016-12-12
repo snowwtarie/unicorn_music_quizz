@@ -14,12 +14,12 @@ import java.util.Map;
  * Layout Secondaire / EAST SIDE du Layout Principal
  */
 public class PanelCardSide extends JPanel {
-    private final CardLayout cardLayout;
+    public final CardLayout cardLayoutSide = new CardLayout();
 
     public PanelCardSide(){
-        cardLayout = new CardLayout();
-        this.add(new PanelSideReady());
-        this.add(new PanelSideScore());
-        this.setVisible(true);
+        this.setLayout(cardLayoutSide);
+        this.add("ready", new PanelSideReady());
+        this.add("score", new PanelSideScore());
+        this.cardLayoutSide.show(this, "ready");
     }
 }
