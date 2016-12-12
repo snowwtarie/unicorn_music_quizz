@@ -1,16 +1,15 @@
 package com.imie.unicorn.view;
 
+
 import com.imie.unicorn.controller.Client;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
 
 /**
  * Created by Stibo on 30/11/2016.
@@ -22,13 +21,17 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     private JPanel progress = new JPanel();
     private JPanel propositionPan = new JPanel();
     private JLabel label = new JLabel("Chanson : ");
+    private Thread progressThread = new Thread(new Traitement());
 
     public PanelMainPlay(){
+
         bar = new JProgressBar();
-        bar.setMaximum(500);
+        bar.setMaximum(3000);
         bar.setMinimum(0);
         bar. setStringPainted (true);
         bar.setPreferredSize(new Dimension(100,50));
+
+
 
         progress.setLayout(new BorderLayout());
         progress.setPreferredSize(new DimensionUIResource(500, 500));
@@ -48,14 +51,27 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         propositionPan.add(jButton, BorderLayout.EAST);
         this.add(propositionPan, BorderLayout.SOUTH);
 
-        jButton. addActionListener( this );
-
+        jButton. addActionListener(this);
         this.setVisible(true);
+
+    }
+
+    public void startThread(){
+        progressThread.start();
+    }
+
+    class Traitement implements Runnable{
+        public void run(){
+            for ( int val = 0; val <= 3000; val++){
+                bar.setValue( val ) ;
+                try {Thread.sleep(10);} catch ( InterruptedException e) {}
+            }
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        label.setText("<html><body>Vous avez saisi: " + jProposition.getText() +"</body></html>");
+        Boolean trackFound = (Boolean) Client.getClient().getRequest(new Message("Song", jProposition.getText())).getValue();
     }
 
     @Override

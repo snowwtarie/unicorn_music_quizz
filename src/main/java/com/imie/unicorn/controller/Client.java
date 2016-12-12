@@ -1,6 +1,7 @@
 package com.imie.unicorn.controller;
 
 
+import com.imie.unicorn.view.JFenetre;
 import com.imie.unicorn.view.Message;
 
 import java.util.ArrayList;
@@ -40,8 +41,11 @@ public class Client {
         }else if(message.getKey().equals("Winner")){
             Player winner = new Player("192.168.0.1", "Hamza", 0, false);
             return new Message("Winner", winner);
+        }else if (message.getKey().equals("gameWinner")){
+            Player winner = new Player("192.168.0.1", "Hamza", 0, false);
+            return new Message("gameWinner", winner);
         }
-        return null;
-    }
+            return null;
+        }
 
 }

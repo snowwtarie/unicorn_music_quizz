@@ -19,6 +19,7 @@ public class JFenetre extends JFrame implements KeyListener {
     public static Font robotoFont;
     public static Font unicornFont;
     private static PanelBorder panelBorder;
+    private static PanelFinal panelFinal;
 
     private JFenetre(){
         this.setTitle ("Unicorn Music Quizzz");
@@ -64,7 +65,6 @@ public class JFenetre extends JFrame implements KeyListener {
             e.printStackTrace();
         }
 
-
         getInstance();
         JOptionPane jOptionPane = new JOptionPane();
         String pseudo = jOptionPane.showInputDialog(null, "Veuillez saisir votre pseudo", "Unicorn Pseudo", JOptionPane.QUESTION_MESSAGE);
@@ -84,8 +84,28 @@ public class JFenetre extends JFrame implements KeyListener {
         return panelBorder;
     }
 
+    public void launchUI(){
+        panelBorder = new PanelBorder();
+        JFenetre.instance.setContentPane(panelBorder);
+        JFenetre.instance.setVisible(true);
+        PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "wait");
+        PanelBorder.getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "ready");
+    }
+
     public void switchtoGame(){
+        PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
+        PanelBorder.getPanelCardMain().getPanelMainPlay().startThread();
+        PanelBorder.getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "score");
+    }
+
+    public void trackFinish(){
         PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
+    }
+
+    public void gameFinish(){
+        panelFinal = new PanelFinal();
+        JFenetre.instance.setContentPane(panelFinal);
+        JFenetre.instance.setVisible(true);
     }
 
     @Override
