@@ -23,24 +23,43 @@ public class PanelSideReady extends JPanel implements ActionListener {
     public PanelSideReady(){
         HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
         try {
-            ipLocale = InetAddress.getLocalHost ().getHostAddress ();
+            ipLocale = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         this.setLayout(new GridLayout(0,2));
-        this.add(new JLabel("Pseudo"));
-        this.add(new JLabel("Pret ?"));
+        this.setBackground(Color.WHITE);
+
+        JLabel pseudo = new JLabel("Pseudo");
+        pseudo.setFont(JFenetre.robotoFont.deriveFont(20f));
+        pseudo.setForeground(Color.PINK);
+
+        JLabel ready = new JLabel("Pret ?");
+        ready.setFont(JFenetre.robotoFont.deriveFont(20f));
+        ready.setForeground(Color.PINK);
+
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.add(pseudo);
+        this.add(ready);
         for(Map.Entry<String, Player> p : joueurs.entrySet()) {
             if(p.getValue().getIp().equals(ipLocale)){
-                this.add(new JLabel("You"));
+                JLabel myself = new JLabel("You");
+                myself.setFont(JFenetre.robotoFont.deriveFont(20f));
+                this.add(myself);
+                readyBox.setBackground(Color.WHITE);
+                readyBox.setFont(JFenetre.robotoFont.deriveFont(20f));
                 this.add(readyBox);
                 readyBox.addActionListener(this);
             } else {
                 this.add(createJoueurLabel(p.getValue().getPseudo()));
                 if(p.getValue().getIsReady()){
-                    this.add(new JLabel("v"));
+                    Icon waitRain = new ImageIcon(getClass().getClassLoader().getResource("ready.png"));
+                    JLabel iconReady = new JLabel(waitRain);
+                    this.add(iconReady);
                 } else {
-                    this.add(new JLabel("x"));
+                    Icon notReady = new ImageIcon(getClass().getClassLoader().getResource("notready.png"));
+                    JLabel iconNotReady = new JLabel(notReady);
+                    this.add(iconNotReady);
                 }
             }
         }
@@ -50,13 +69,64 @@ public class PanelSideReady extends JPanel implements ActionListener {
 
     private JLabel createJoueurLabel(String pseudo){
         JLabel joueur = new JLabel(pseudo);
+        joueur.setFont(JFenetre.robotoFont.deriveFont(20f));
         return joueur;
+    }
+
+    public void refreshPlayers(){
+        this.removeAll();
+        HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitPlayer", null)).getValue();
+        try {
+            ipLocale = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        this.setLayout(new GridLayout(0,2));
+        this.setBackground(Color.WHITE);
+
+        JLabel pseudo = new JLabel("Pseudo");
+        pseudo.setFont(JFenetre.robotoFont.deriveFont(20f));
+        pseudo.setForeground(Color.PINK);
+
+        JLabel ready = new JLabel("Pret ?");
+        ready.setFont(JFenetre.robotoFont.deriveFont(20f));
+        ready.setForeground(Color.PINK);
+
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        this.add(pseudo);
+        this.add(ready);
+        for(Map.Entry<String, Player> p : joueurs.entrySet()) {
+            if(p.getValue().getIp().equals(ipLocale)){
+                JLabel myself = new JLabel("You");
+                myself.setFont(JFenetre.robotoFont.deriveFont(20f));
+                this.add(myself);
+                readyBox.setBackground(Color.WHITE);
+                readyBox.setFont(JFenetre.robotoFont.deriveFont(20f));
+                this.add(readyBox);
+                readyBox.addActionListener(this);
+            } else {
+                this.add(createJoueurLabel(p.getValue().getPseudo()));
+                if(p.getValue().getIsReady()){
+                    Icon waitRain = new ImageIcon(getClass().getClassLoader().getResource("ready.png"));
+                    JLabel iconReady = new JLabel(waitRain);
+                    this.add(iconReady);
+                } else {
+                    Icon notReady = new ImageIcon(getClass().getClassLoader().getResource("notready.png"));
+                    JLabel iconNotReady = new JLabel(notReady);
+                    this.add(iconNotReady);
+                }
+            }
+        }
+        this.setPreferredSize(new DimensionUIResource(300, 800));
+        this.setVisible(true);
+        this.repaint();
+        this.revalidate();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (readyBox.isSelected()){
-            Client.getClient().getRequest(new Message("Ready", null)).getValue();
+            Client.getClient().getRequest(new Message("refreshPlayers", null)).getValue();
             System.out.println("Send Ready");
         } else {
             System.out.println("Not Ready");

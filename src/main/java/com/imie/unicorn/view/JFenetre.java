@@ -92,6 +92,14 @@ public class JFenetre extends JFrame implements KeyListener {
         PanelBorder.getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "ready");
     }
 
+    public void refreshReadyPlayers(){
+        PanelBorder.getPanelCardSide().getPanelSideReady().refreshPlayers();
+    }
+
+    public void refreshScore(){
+        PanelBorder.getPanelCardSide().getPanelSideScore().refreshScore();
+    }
+
     public void switchtoGame(){
         PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
         PanelBorder.getPanelCardMain().getPanelMainPlay().startThread();
@@ -115,7 +123,9 @@ public class JFenetre extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switchtoGame();
+        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            trackFinish();
+        }
     }
 
     @Override
