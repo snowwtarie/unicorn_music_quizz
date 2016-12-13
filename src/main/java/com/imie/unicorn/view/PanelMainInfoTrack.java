@@ -18,12 +18,15 @@ import java.net.URL;
  */
 public class PanelMainInfoTrack extends JPanel {
     private JLabel message = new JLabel("", SwingConstants.CENTER);
-
     private JPanel trackInfos = new JPanel();
     private JLabel trackTitle = new JLabel("", SwingConstants.CENTER);
     private JLabel infos = new JLabel("Preparez vous, une nouvelle chanson va demarrer !", SwingConstants.CENTER);
 
     public PanelMainInfoTrack(){
+       initPanelMainInfoTrack();
+    }
+
+    private void initPanelMainInfoTrack(){
         Track lastTrack = (Track)Client.getClient().getRequest(new Message("EndTrack", null)).getValue();
 
         URL url = null;
@@ -68,5 +71,12 @@ public class PanelMainInfoTrack extends JPanel {
         this.add(message, BorderLayout.NORTH);
         this.add(trackInfos, BorderLayout.CENTER);
         this.add(infos , BorderLayout.SOUTH);
+    }
+
+    public void newInfoTrack(){
+        this.removeAll();
+        initPanelMainInfoTrack();
+        this.repaint();
+        this.revalidate();
     }
 }

@@ -12,7 +12,7 @@ import java.awt.event.*;
  * Created by Stibo on 30/11/2016.
  */
 public class PanelMainPlay extends JPanel implements ActionListener, KeyListener, FocusListener {
-    private final JProgressBar bar;
+    private JProgressBar bar;
     private JTextField jProposition = new JTextField();
     private JButton jButton = new JButton("Confirmer");
     private JPanel progress = new JPanel();
@@ -22,23 +22,31 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     private Thread progressThread = new Thread(new Traitement());
 
     public PanelMainPlay(){
+        initPanelMainPlay();
+    }
 
+    private void initPanelMainPlay(){
         int numberSong = (Integer) Client.getClient().getRequest(new Message("songNumber", null)).getValue();
         label.setText("Chanson "+numberSong+"/10");
+        label.setFont(JFenetre.robotoFont.deriveFont(25f));
 
         UIManager.put("ProgressBar.background", Color.GRAY );
         UIManager.put("ProgressBar.foreground", Color.RED);
-        UIManager.put("ProgressBar.selectionBackground", Color.WHITE);
+        UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
         UIManager.put("ProgressBar.selectionForeground", Color.WHITE);
+
 
         bar = new JProgressBar();
         bar.setMaximum(3000);
         bar.setMinimum(0);
         bar. setStringPainted (true);
         bar.setPreferredSize(new Dimension(100,50));
+        bar.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+        bar.setBackground(Color.WHITE);
 
 
         wrongProp.setFont(JFenetre.unicornFont.deriveFont(25f));
+        wrongProp.setForeground(Color.RED);
         wrongProp.setBackground(Color.WHITE);
         wrongProp.setPreferredSize(new DimensionUIResource(800, 100));
 
@@ -62,7 +70,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
         jProposition.addKeyListener(this);
         jProposition.addFocusListener(this);
-
+        jProposition.setFont(JFenetre.robotoFont.deriveFont(20f));
 
         propositionPan.setLayout(new BorderLayout());
         propositionPan.setPreferredSize(new DimensionUIResource(200, 100));
@@ -78,6 +86,13 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
         jButton. addActionListener(this);
         this.setVisible(true);
+    }
+
+    public void refreshPanelMainPlay(){
+        this.removeAll();
+        initPanelMainPlay();
+        this.repaint();
+        this.revalidate();
     }
 
     public void startThread(){

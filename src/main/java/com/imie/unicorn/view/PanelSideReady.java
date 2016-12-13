@@ -21,6 +21,9 @@ public class PanelSideReady extends JPanel implements ActionListener {
     private String ipLocale;
 
     public PanelSideReady(){
+        initPanelSideReady();
+    }
+    private void initPanelSideReady(){
         HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
         try {
             ipLocale = InetAddress.getLocalHost().getHostAddress();
@@ -32,11 +35,11 @@ public class PanelSideReady extends JPanel implements ActionListener {
 
         JLabel pseudo = new JLabel("Pseudo");
         pseudo.setFont(JFenetre.robotoFont.deriveFont(20f));
-        pseudo.setForeground(Color.PINK);
+        pseudo.setForeground(Color.RED);
 
-        JLabel ready = new JLabel("Pret ?");
+        JLabel ready = new JLabel("Pret ?", SwingConstants.CENTER);
         ready.setFont(JFenetre.robotoFont.deriveFont(20f));
-        ready.setForeground(Color.PINK);
+        ready.setForeground(Color.RED);
 
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.add(pseudo);
@@ -66,7 +69,6 @@ public class PanelSideReady extends JPanel implements ActionListener {
         this.setPreferredSize(new DimensionUIResource(300, 800));
         this.setVisible(true);
     }
-
     private JLabel createJoueurLabel(String pseudo){
         JLabel joueur = new JLabel(pseudo);
         joueur.setFont(JFenetre.robotoFont.deriveFont(20f));
@@ -75,50 +77,7 @@ public class PanelSideReady extends JPanel implements ActionListener {
 
     public void refreshPlayers(){
         this.removeAll();
-        HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitPlayer", null)).getValue();
-        try {
-            ipLocale = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        this.setLayout(new GridLayout(0,2));
-        this.setBackground(Color.WHITE);
-
-        JLabel pseudo = new JLabel("Pseudo");
-        pseudo.setFont(JFenetre.robotoFont.deriveFont(20f));
-        pseudo.setForeground(Color.PINK);
-
-        JLabel ready = new JLabel("Pret ?");
-        ready.setFont(JFenetre.robotoFont.deriveFont(20f));
-        ready.setForeground(Color.PINK);
-
-        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        this.add(pseudo);
-        this.add(ready);
-        for(Map.Entry<String, Player> p : joueurs.entrySet()) {
-            if(p.getValue().getIp().equals(ipLocale)){
-                JLabel myself = new JLabel("You");
-                myself.setFont(JFenetre.robotoFont.deriveFont(20f));
-                this.add(myself);
-                readyBox.setBackground(Color.WHITE);
-                readyBox.setFont(JFenetre.robotoFont.deriveFont(20f));
-                this.add(readyBox);
-                readyBox.addActionListener(this);
-            } else {
-                this.add(createJoueurLabel(p.getValue().getPseudo()));
-                if(p.getValue().getIsReady()){
-                    Icon waitRain = new ImageIcon(getClass().getClassLoader().getResource("ready.png"));
-                    JLabel iconReady = new JLabel(waitRain);
-                    this.add(iconReady);
-                } else {
-                    Icon notReady = new ImageIcon(getClass().getClassLoader().getResource("notready.png"));
-                    JLabel iconNotReady = new JLabel(notReady);
-                    this.add(iconNotReady);
-                }
-            }
-        }
-        this.setPreferredSize(new DimensionUIResource(300, 800));
-        this.setVisible(true);
+        initPanelSideReady();
         this.repaint();
         this.revalidate();
     }

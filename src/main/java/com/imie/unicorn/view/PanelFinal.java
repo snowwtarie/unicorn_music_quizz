@@ -16,7 +16,12 @@ public class PanelFinal extends JPanel implements ActionListener {
     private JLabel message = new JLabel("", SwingConstants.CENTER);
     private JButton reload = new JButton("Relancer");
 
+
     public PanelFinal(){
+        initPanelFinal();
+    }
+
+    private void initPanelFinal(){
         Player gameWinner = (Player) Client.getClient().getRequest(new Message("gameWinner", null)).getValue();
         message.setText(gameWinner.getPseudo()+" est le vainqueur, Felicitations !");
 
@@ -28,7 +33,13 @@ public class PanelFinal extends JPanel implements ActionListener {
         reload.addActionListener(this);
         this.add(message, BorderLayout.CENTER);
         this.add(reload, BorderLayout.SOUTH);
+    }
 
+    public void refreshPanelFinal(){
+        this.removeAll();
+        initPanelFinal();
+        this.repaint();
+        this.revalidate();
     }
 
     @Override

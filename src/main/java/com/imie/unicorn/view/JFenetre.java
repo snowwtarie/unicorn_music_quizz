@@ -25,7 +25,7 @@ public class JFenetre extends JFrame implements KeyListener {
         this.setTitle ("Unicorn Music Quizzz");
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.setSize(new DimensionUIResource(1210, 800));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.RED);
         this.setVisible(true);
         this.setLocationRelativeTo ( null ) ;
         this.setResizable(false);
@@ -98,6 +98,14 @@ public class JFenetre extends JFrame implements KeyListener {
 
     public void refreshScore(){
         PanelBorder.getPanelCardSide().getPanelSideScore().refreshScore();
+    }
+
+    public void newRoundSong(){
+        getPanelBorder().getPanelCardMain().getPanelMainPlay().refreshPanelMainPlay();
+    }
+
+    public void newInfoSong(){
+        getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack();
     }
 
     public void switchtoGame(){
