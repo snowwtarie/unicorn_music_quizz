@@ -28,7 +28,7 @@ public class Client {
             test.put("Hamza192.168.0.1", new Player("192.168.0.1", "Hamza", 0, false));
             test.put("Matt192.168.0.2", new Player("192.168.0.2", "Matt", 0, false));
             test.put("Marius192.168.0.3", new Player("192.168.0.3", "Marius", 0, true));
-            test.put("Stibo10.4.1.2", new Player("10.4.1.2", "Stibo", 0, true));
+            test.put("Stibo10.4.1.2", new Player("192.168.43.43", "Stibo", 0, true));
 
             return new Message("InitOtherPlayer", test);
         }else if(message.getKey().equals("Connexion")){
@@ -44,6 +44,21 @@ public class Client {
         }else if (message.getKey().equals("gameWinner")){
             Player winner = new Player("192.168.0.1", "Hamza", 0, false);
             return new Message("gameWinner", winner);
+        }else if (message.getKey().equals("refreshPlayers")){
+            JFenetre.getInstance().refreshReadyPlayers();
+            return new Message("refreshPlayers", null);
+        }else if (message.getKey().equals("InitPlayer")){
+            HashMap<String, Player> test = new HashMap<String, Player>();
+            test.put("Hamza192.168.0.1", new Player("192.168.0.1", "Hamza", 0, true));
+            test.put("Matt192.168.0.2", new Player("192.168.0.2", "Matt", 0, true));
+            test.put("Marius192.168.0.3", new Player("192.168.0.3", "Marius", 0, true));
+            test.put("Stibo10.4.1.2", new Player("192.168.43.43", "Stibo", 0, true));
+
+            return new Message("InitPlayer", test);
+        }else if (message.getKey().equals("Song")){
+            return new Message("Song", false);
+        }else if (message.getKey().equals("songNumber")){
+            return new Message("songNumber", 2);
         }
             return null;
         }

@@ -24,7 +24,7 @@ public class PanelMainInfoTrack extends JPanel {
     private JLabel infos = new JLabel("Preparez vous, une nouvelle chanson va demarrer !", SwingConstants.CENTER);
 
     public PanelMainInfoTrack(){
-        Track lastTrack = (Track) Client.getClient().getRequest(new Message("EndTrack", null)).getValue();
+        Track lastTrack = (Track)Client.getClient().getRequest(new Message("EndTrack", null)).getValue();
 
         URL url = null;
         try {

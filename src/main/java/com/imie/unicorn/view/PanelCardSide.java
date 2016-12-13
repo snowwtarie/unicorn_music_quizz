@@ -15,11 +15,23 @@ import java.util.Map;
  */
 public class PanelCardSide extends JPanel {
     public final CardLayout cardLayoutSide = new CardLayout();
+    private static PanelSideReady panelSideReady;
+    private static PanelSideScore panelSideScore;
+
+    public static PanelSideReady getPanelSideReady() {
+        return panelSideReady;
+    }
+    public static PanelSideScore getPanelSideScore() {
+        return panelSideScore;
+    }
 
     public PanelCardSide(){
+        panelSideReady = new PanelSideReady();
+        panelSideScore = new PanelSideScore();
+
         this.setLayout(cardLayoutSide);
-        this.add("ready", new PanelSideReady());
-        this.add("score", new PanelSideScore());
+        this.add("ready", panelSideReady);
+        this.add("score", panelSideScore);
         this.cardLayoutSide.show(this, "ready");
     }
 }
