@@ -13,13 +13,17 @@ import java.awt.event.*;
  */
 public class PanelMainPlay extends JPanel implements ActionListener, KeyListener, FocusListener {
     private JProgressBar bar;
-    private JTextField jProposition = new JTextField();
+    private static JTextField jProposition = new JTextField();
     private JButton jButton = new JButton("Confirmer");
     private JPanel progress = new JPanel();
     private JPanel propositionPan = new JPanel();
     private JLabel label = new JLabel("", SwingConstants.CENTER);
     private JLabel wrongProp = new JLabel("", SwingConstants.CENTER);
     private Thread progressThread = new Thread(new Traitement());
+
+    public static JTextField getProposition() {
+        return jProposition;
+    }
 
     public PanelMainPlay(){
         initPanelMainPlay();
@@ -72,6 +76,8 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         jProposition.addFocusListener(this);
         jProposition.setFont(JFenetre.robotoFont.deriveFont(20f));
 
+
+
         propositionPan.setLayout(new BorderLayout());
         propositionPan.setPreferredSize(new DimensionUIResource(200, 100));
         propositionPan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -83,7 +89,6 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         propositionPan.add(jProposition, BorderLayout.CENTER);
         propositionPan.add(jButton, BorderLayout.EAST);
         this.add(propositionPan, BorderLayout.SOUTH);
-
         jButton. addActionListener(this);
         this.setVisible(true);
     }

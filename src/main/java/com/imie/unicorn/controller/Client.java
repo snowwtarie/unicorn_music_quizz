@@ -4,7 +4,6 @@ package com.imie.unicorn.controller;
 import com.imie.unicorn.view.JFenetre;
 import com.imie.unicorn.view.Message;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Client {
