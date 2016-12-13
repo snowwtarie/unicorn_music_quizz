@@ -63,13 +63,14 @@ class PlaylistDeserializer implements JsonDeserializer<ArrayList<Track>> {
 
         JsonObject jObjectPlaylist = json.getAsJsonObject();
         JsonArray jArrayData = jObjectPlaylist.get("data").getAsJsonArray();
-
+        int trackNumber=0;
         for (JsonElement jsonElementTrack : jArrayData) {
+            trackNumber++;
             JsonObject jObjectTrack = jsonElementTrack.getAsJsonObject();
             JsonObject jObjectArtist = jObjectTrack.get("artist").getAsJsonObject();
             JsonObject jObjectAlbum = jObjectTrack.get("album").getAsJsonObject();
 
-            tracks.add(new Track(jObjectTrack.get("id").getAsInt(), jObjectTrack.get("preview").getAsString(), jObjectTrack.get("title").getAsString(), jObjectArtist.get("name").getAsString(), jObjectAlbum.get("cover_medium").getAsString()));
+            tracks.add(new Track(trackNumber, jObjectTrack.get("preview").getAsString(), jObjectTrack.get("title").getAsString(), jObjectArtist.get("name").getAsString(), jObjectAlbum.get("cover_medium").getAsString()));
         }
 
         return tracks;

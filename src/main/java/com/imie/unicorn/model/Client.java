@@ -21,6 +21,7 @@ public class Client {
     private Selector selector;
     private Charset charset = Charset.forName("UTF-8");
     private SocketChannel sc = null;
+    private JFenetre fenetre = JFenetre.getInstance();
 
     private void init() throws IOException {
         selector = Selector.open();
@@ -32,7 +33,7 @@ public class Client {
 
         new ClientThread().start();
 
-        JFenetre fenetre = JFenetre.getInstance();
+        fenetre.setClient(this);
         fenetre.init();
 
         Scanner scan = new Scanner(System.in);
@@ -79,6 +80,20 @@ public class Client {
     public boolean getConnection(String pseudo){
         return (Boolean) this.sendMessage(new Message("connection", new String("pseudo"))).getValue();
     }
+
+    public HashMap<String, Player> playerList(){
+        return (HashMap<String, Player>) this.sendMessage(new Message("playerList", null)).getValue();
+    }
+
+    public void playerReady(){
+        this.sendMessage(new Message("playerReady", null));
+    }
+
+    public Track getCurrentTrack(){
+        return (Track) this.sendMessage(new Message("currentTrack", null)).getValue();
+    }
+    
+
 
 
 
