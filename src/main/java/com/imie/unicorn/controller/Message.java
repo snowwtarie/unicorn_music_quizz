@@ -8,6 +8,10 @@ public class Message {
     private String key;
     private Object value;
 
+    public Message() {
+
+    }
+
 
     public Message(String key, Object value) {
         this.key = key;

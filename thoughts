@@ -1,2 +1,5 @@
 Fonctionnement Serveur
     Reçoit une connection -> créé un ThreadServeur -> fourni le socket Client
+Quand un client tape qqch, forcer son état en OP_WRITE, puis repasser en OP_READ tant qu'il n'a pas envoyé qqch
+
+Modifier la méthode write() du serveur pour propager à tous, sauf le client courant
