@@ -1,6 +1,9 @@
 package com.imie.unicorn.model;
 
+import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.view.JFenetre;
+import com.imie.unicorn.view.Message;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,6 +12,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -68,6 +72,15 @@ public class Client {
             }
         }
     }
+    private Message sendMessage(Message message){
+        return null;
+    }
+
+    public boolean getConnection(String pseudo){
+        return (Boolean) this.sendMessage(new Message("connection", new String("pseudo"))).getValue();
+    }
+
+
 
     public static void main(String[] args) throws IOException {
         new Client().init();

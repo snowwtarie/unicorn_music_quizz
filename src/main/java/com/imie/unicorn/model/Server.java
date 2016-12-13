@@ -1,5 +1,9 @@
 package com.imie.unicorn.model;
 
+import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.UnicornCore;
+import com.imie.unicorn.view.Message;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -11,10 +15,14 @@ public class Server {
 
     private Selector selector;
     private Charset charset =  Charset.forName("UTF-8");
+    private UnicornCore core;
+    private ServerSocketChannel server;
 
     public void init() throws Exception {
+        this.core = UnicornCore.getUnicornCore();
+
         selector = Selector.open();
-        ServerSocketChannel server = ServerSocketChannel.open();
+        server = ServerSocketChannel.open();
         InetSocketAddress isa = new InetSocketAddress("127.0.0.1", 3000);
 
         server.socket().bind(isa);
@@ -22,6 +30,7 @@ public class Server {
         server.register(selector, SelectionKey.OP_ACCEPT);
 
         while (selector.select() > 0) {
+
             for (SelectionKey key : selector.selectedKeys()) {
                 selector.selectedKeys().remove(key);
 
@@ -69,7 +78,36 @@ public class Server {
         }
     }
 
+    private void handleReceivedMessage(Message message){
+
+        //Message received :
+        if(message.getKey().equals("connection")) {
+            //1 : initPlayer --> player connected, has to be added to the game. Player object expected
+            core.addPlayer((Player) message.getValue());
+        }
+         if(message.getKey().equals("playerReady")){
+             //2 : ready --> player ready to play. Player object expected
+             core.getPlayerList().get(((Player) message.getValue())).setIsReady(true);
+         }
+         if(message.getKey().equals("")){
+
+         }
+    }
+
+    private Message messageAllareReady(){
+        if(core.checkIfAllReady())
+            return new Message("ready", core.getPlayerList());
+        return null;
+    }
+    private Message currentTrack(){
+        return new Message("endtrack", core.getCurrentUrlTrack());
+    }
+
+
+
     public static void main(String[] args) throws Exception {
-        new Server().init();
+        Server server = new Server();
+        server.init();
+
     }
 }

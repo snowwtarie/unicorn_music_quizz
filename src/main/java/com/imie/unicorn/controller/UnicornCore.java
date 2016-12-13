@@ -82,8 +82,6 @@ public class UnicornCore {
 
 
     public void handleProposition(String proposition, String idPlayer){
-
-
         if(!checkProposition("artist", proposition)){
             if(!checkProposition("title", proposition)){
                 System.out.println("Perdu ! ");

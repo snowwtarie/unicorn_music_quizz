@@ -10,7 +10,6 @@ public class FrontController {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         UnicornCore unicornCore = UnicornCore.getUnicornCore();
-        unicornCore.handleProposition("Big Eye", null);
     }
 
 }

@@ -56,7 +56,7 @@ public class PanelMainInfoTrack extends JPanel {
 
         Player winner = (Player) Client.getClient().getRequest(new Message("Winner", null)).getValue();
         if(winner == null){
-            message.setText("Personne n'a gagner !");
+            message.setText("Personne n'a gagne !");
         } else {
             message.setText(winner.getPseudo()+" a trouver la bonne reponse !");
         }

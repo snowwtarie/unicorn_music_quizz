@@ -9,6 +9,8 @@ public class Message {
     private Object value;
 
 
+
+
     public Message(String key, Object value) {
         this.key = key;
         this.value = value;
@@ -29,4 +31,5 @@ public class Message {
     public void setValue(Object value) {
         this.value = value;
     }
+
 }
