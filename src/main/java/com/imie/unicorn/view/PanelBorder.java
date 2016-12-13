@@ -26,7 +26,7 @@ public class PanelBorder extends JPanel {
         panelCardSide = new PanelCardSide();
 
         this.setLayout(new BorderLayout());
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.RED);
         this.add(panelCardMain, BorderLayout.WEST);
         this.add(panelCardSide, BorderLayout.EAST);
 

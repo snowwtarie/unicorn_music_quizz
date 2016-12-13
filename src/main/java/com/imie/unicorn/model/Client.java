@@ -1,5 +1,7 @@
 package com.imie.unicorn.model;
 
+import com.imie.unicorn.view.JFenetre;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -25,6 +27,10 @@ public class Client {
         sc.register(selector, SelectionKey.OP_READ);
 
         new ClientThread().start();
+
+        JFenetre fenetre = JFenetre.getInstance();
+        fenetre.init();
+
         Scanner scan = new Scanner(System.in);
 
         while (scan.hasNextLine()) {

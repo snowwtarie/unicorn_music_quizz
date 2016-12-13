@@ -12,19 +12,24 @@ import java.awt.event.KeyListener;
 public class PanelCardMain extends JPanel{
     public final CardLayout cardLayout = new CardLayout();
     private static PanelMainPlay panelMainPlay;
+    private static PanelMainInfoTrack panelMainInfoTrack;
 
     public static PanelMainPlay getPanelMainPlay() {
         return panelMainPlay;
+    }
+    public static PanelMainInfoTrack getPanelMainInfoTrack() {
+        return panelMainInfoTrack;
     }
 
     public PanelCardMain(){
 
         panelMainPlay = new PanelMainPlay();
+        panelMainInfoTrack = new PanelMainInfoTrack();
 
         this.setLayout(cardLayout);
         this.add("wait", new PanelMainWait());
         this.add("gameMain", panelMainPlay);
-        this.add("infosTrack", new PanelMainInfoTrack());
+        this.add("infosTrack", panelMainInfoTrack);
         this.cardLayout.show(this, "wait");
     }
 
