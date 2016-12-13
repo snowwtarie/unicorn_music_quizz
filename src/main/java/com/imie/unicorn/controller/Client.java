@@ -55,6 +55,10 @@ public class Client {
             test.put("Stibo10.4.1.2", new Player("192.168.43.43", "Stibo", 0, true));
 
             return new Message("InitPlayer", test);
+        }else if (message.getKey().equals("Song")){
+            return new Message("Song", false);
+        }else if (message.getKey().equals("songNumber")){
+            return new Message("songNumber", 2);
         }
             return null;
         }

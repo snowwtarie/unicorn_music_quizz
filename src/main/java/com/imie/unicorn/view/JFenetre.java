@@ -107,6 +107,7 @@ public class JFenetre extends JFrame implements KeyListener {
     }
 
     public void trackFinish(){
+        PanelBorder.getPanelCardMain().getPanelMainPlay().stopThread();
         PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
     }
 
@@ -124,7 +125,7 @@ public class JFenetre extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            trackFinish();
+            switchtoGame();
         }
     }
 

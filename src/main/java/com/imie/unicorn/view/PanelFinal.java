@@ -20,14 +20,14 @@ public class PanelFinal extends JPanel implements ActionListener {
         Player gameWinner = (Player) Client.getClient().getRequest(new Message("gameWinner", null)).getValue();
         message.setText(gameWinner.getPseudo()+" est le vainqueur, Felicitations !");
 
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 100,0));
+        this.setLayout(new BorderLayout());
         this.setBackground(Color.WHITE);
         this.setPreferredSize(new DimensionUIResource(800, 800));
         message.setPreferredSize(new DimensionUIResource(800, 150));
         message.setFont(JFenetre.unicornFont);
         reload.addActionListener(this);
-        this.add(message);
-        this.add(reload);
+        this.add(message, BorderLayout.CENTER);
+        this.add(reload, BorderLayout.SOUTH);
 
     }
 

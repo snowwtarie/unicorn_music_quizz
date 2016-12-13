@@ -15,18 +15,32 @@ public class PanelSideScore extends JPanel{
 
     public PanelSideScore(){
         HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.setLayout(new GridLayout(0,2));
-        this.add(new JLabel("Pseudo"));
-        this.add(new JLabel("Score"));
+        this.setBackground(Color.WHITE);
+
+        JLabel pseudo = new JLabel("Pseudo");
+        pseudo.setFont(JFenetre.robotoFont.deriveFont(20f));
+        pseudo.setForeground(Color.PINK);
+
+        JLabel score = new JLabel("Score");
+        score.setFont(JFenetre.robotoFont.deriveFont(20f));
+        score.setForeground(Color.PINK);
+
+        this.add(pseudo);
+        this.add(score);
 
         for(Map.Entry<String, Player> p : joueurs.entrySet()) {
             this.add(createJoueurLabel(p.getValue().getPseudo()));
-            this.add(new JLabel(String.valueOf(p.getValue().getScore())));
+            JLabel playerScore = new JLabel(String.valueOf(p.getValue().getScore()));
+            playerScore.setFont(JFenetre.robotoFont.deriveFont(20f));
+            this.add(playerScore);
         }
     }
 
     private JLabel createJoueurLabel(String pseudo){
         JLabel joueur = new JLabel(pseudo);
+        joueur.setFont(JFenetre.robotoFont.deriveFont(20f));
         joueur.setPreferredSize(new Dimension(130,50));
         return joueur;
     }
@@ -35,13 +49,26 @@ public class PanelSideScore extends JPanel{
         this.removeAll();
 
         HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.setLayout(new GridLayout(0,2));
-        this.add(new JLabel("Pseudo"));
-        this.add(new JLabel("Score"));
+        this.setBackground(Color.WHITE);
+
+        JLabel pseudo = new JLabel("Pseudo");
+        pseudo.setFont(JFenetre.robotoFont.deriveFont(20f));
+        pseudo.setForeground(Color.PINK);
+
+        JLabel score = new JLabel("Score");
+        score.setFont(JFenetre.robotoFont.deriveFont(20f));
+        score.setForeground(Color.PINK);
+
+        this.add(pseudo);
+        this.add(score);
 
         for(Map.Entry<String, Player> p : joueurs.entrySet()) {
             this.add(createJoueurLabel(p.getValue().getPseudo()));
-            this.add(new JLabel(String.valueOf(p.getValue().getScore())));
+            JLabel playerScore = new JLabel(String.valueOf(p.getValue().getScore()));
+            playerScore.setFont(JFenetre.robotoFont.deriveFont(20f));
+            this.add(playerScore);
         }
 
         this.repaint();
