@@ -92,8 +92,16 @@ public class Client {
     public Track getCurrentTrack(){
         return (Track) this.sendMessage(new Message("currentTrack", null)).getValue();
     }
-    
 
+    public boolean checkProposition(String proposition){
+        return (Boolean) this.sendMessage(new Message("proposition", proposition)).getValue();
+    }
+    public Player getRoundWinner(){
+        return (Player) this.sendMessage(new Message("winner", null)).getValue();
+    }
+    public Player getGameWinner(){
+        return (Player) this.sendMessage(new Message("gameWinner", null)).getValue();
+    }
 
 
 

@@ -99,9 +99,6 @@ public class Server {
             return new Message("ready", core.getPlayerList());
         return null;
     }
-    private Message currentTrack(){
-        return new Message("endtrack", core.getCurrentUrlTrack());
-    }
 
 
 
