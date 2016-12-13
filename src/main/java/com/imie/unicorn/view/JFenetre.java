@@ -33,7 +33,7 @@ public class JFenetre extends JFrame implements KeyListener {
 
     }
 
-    public static void main(String args []) {
+    public void init() {
 
         try {
             //create the font to use. Specify the size!
