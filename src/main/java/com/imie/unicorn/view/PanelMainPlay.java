@@ -2,6 +2,7 @@ package com.imie.unicorn.view;
 
 
 import com.imie.unicorn.controller.Client;
+import com.imie.unicorn.controller.Track;
 
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
@@ -30,8 +31,9 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     }
 
     private void initPanelMainPlay(){
-        int numberSong = (Integer) Client.getClient().getRequest(new Message("songNumber", null)).getValue();
-        label.setText("Chanson "+numberSong+"/10");
+        Track currentTrack = JFenetre.getInstance().getClient().getCurrentTrack();
+        int numberSong = currentTrack.getId();
+        label.setText("Chanson "+numberSong+"/25");
         label.setFont(JFenetre.robotoFont.deriveFont(25f));
 
         UIManager.put("ProgressBar.background", Color.GRAY );
@@ -131,10 +133,10 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Boolean trackFound = (Boolean) Client.getClient().getRequest(new Message("Song", jProposition.getText())).getValue();
+        Boolean trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
         if(!trackFound){
             jProposition.setText("");
-            wrongProp.setText("Faux");
+            wrongProp.setText("Faux, Essaie Encore !");
         }
     }
 
@@ -151,7 +153,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER){
-            Boolean trackFound = (Boolean) Client.getClient().getRequest(new Message("Song", jProposition.getText())).getValue();
+            Boolean trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
             if(!trackFound){
                 jProposition.setText("");
                 wrongProp.setText("Faux, Essaie Encore !");

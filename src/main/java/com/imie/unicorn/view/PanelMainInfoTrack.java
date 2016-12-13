@@ -27,7 +27,7 @@ public class PanelMainInfoTrack extends JPanel {
     }
 
     private void initPanelMainInfoTrack(){
-        Track lastTrack = (Track)Client.getClient().getRequest(new Message("EndTrack", null)).getValue();
+        Track lastTrack = JFenetre.getInstance().getClient().getCurrentTrack();
 
         URL url = null;
         try {
@@ -54,7 +54,7 @@ public class PanelMainInfoTrack extends JPanel {
         trackInfos.setBackground(Color.WHITE);
         trackInfos.setVisible(true);
 
-        Player winner = (Player) Client.getClient().getRequest(new Message("Winner", null)).getValue();
+        Player winner = JFenetre.getInstance().getClient().getRoundWinner();
         if(winner == null){
             message.setText("Personne n'a gagne !");
         } else {

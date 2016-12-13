@@ -85,10 +85,7 @@ public class PanelSideReady extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (readyBox.isSelected()){
-            Client.getClient().getRequest(new Message("refreshPlayers", null)).getValue();
-            System.out.println("Send Ready");
-        } else {
-            System.out.println("Not Ready");
+            JFenetre.getInstance().getClient().playerReady();
         }
     }
 }

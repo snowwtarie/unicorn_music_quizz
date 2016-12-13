@@ -22,7 +22,7 @@ public class PanelFinal extends JPanel implements ActionListener {
     }
 
     private void initPanelFinal(){
-        Player gameWinner = (Player) Client.getClient().getRequest(new Message("gameWinner", null)).getValue();
+        Player gameWinner = JFenetre.getInstance().getClient().getGameWinner();
         message.setText(gameWinner.getPseudo()+" est le vainqueur, Felicitations !");
 
         this.setLayout(new BorderLayout());
