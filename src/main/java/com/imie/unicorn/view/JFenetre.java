@@ -88,8 +88,8 @@ public class JFenetre extends JFrame implements KeyListener {
         panelBorder = new PanelBorder();
         JFenetre.instance.setContentPane(panelBorder);
         JFenetre.instance.setVisible(true);
-        PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "wait");
-        PanelBorder.getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "ready");
+        getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "wait");
+        getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "ready");
     }
 
     public void refreshReadyPlayers(){
@@ -101,14 +101,14 @@ public class JFenetre extends JFrame implements KeyListener {
     }
 
     public void switchtoGame(){
-        PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
-        PanelBorder.getPanelCardMain().getPanelMainPlay().startThread();
-        PanelBorder.getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "score");
+        getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
+        getPanelBorder().getPanelCardMain().getPanelMainPlay().startThread();
+        getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "score");
     }
 
     public void trackFinish(){
-        PanelBorder.getPanelCardMain().getPanelMainPlay().stopThread();
-        PanelBorder.getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
+        getPanelBorder().getPanelCardMain().getPanelMainPlay().stopThread();
+        getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
     }
 
     public void gameFinish(){
