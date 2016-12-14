@@ -57,6 +57,8 @@ public class Client {
     }
 
     private class ClientThread extends Thread {
+        private ByteBuffer buffer;
+
         public void run() {
             try {
                 while (selector.select() > 0) {
@@ -65,11 +67,11 @@ public class Client {
 
                         if (key.isReadable()) {
                             SocketChannel sc = (SocketChannel) key.channel();
-                            ByteBuffer buff = ByteBuffer.allocate(1024);
+                            this.buffer = ByteBuffer.allocate(1024);
                             String content = "";
 
-                            System.out.println("Server >> " + read(sc, buff).getValue());
-                            if(read(sc, buff).getValue().equals("connection")){
+                            System.out.println("Server >> " + read(sc, buffer).getValue());
+                            if(read(sc, this.buffer).getValue().equals("connection")){
 
                             }
                             key.interestOps(SelectionKey.OP_READ);
@@ -100,7 +102,7 @@ public class Client {
 
         return (Message) ois.readObject();
     }
-    private Message sendMessage(Message message) throws IOException {
+    private void sendMessage(Message message) throws IOException {
         this.send(message, sc);
     }
     //Methode qui sera utilisée en reception par le client
@@ -118,7 +120,7 @@ public class Client {
     }
 
     public HashMap<String, Player> playerList() throws IOException {
-        return (HashMap<String, Player>) this.sendMessage(new Message("playerList", null)).getValue();
+        return new HashMap<String, Player>();
     }
 
     public void playerReady() throws IOException {
@@ -126,11 +128,7 @@ public class Client {
     }
 
     public Track getCurrentTrack(){
-        try {
-            return this.currentTrack;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return this.currentTrack;
     }
 
     public boolean checkProposition(String proposition) throws IOException {
