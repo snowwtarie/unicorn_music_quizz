@@ -14,7 +14,7 @@ import java.util.*;
 public class PanelSideScore extends JPanel{
 
     public PanelSideScore(){
-        initPanelSideScore();
+
     }
 
     private void initPanelSideScore(){

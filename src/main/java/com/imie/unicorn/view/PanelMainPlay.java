@@ -10,8 +10,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Created by Stibo on 30/11/2016.
- */
+* Created by Stibo on 30/11/2016.
+*/
+
 public class PanelMainPlay extends JPanel implements ActionListener, KeyListener, FocusListener {
     private JProgressBar bar;
     private static JTextField jProposition = new JTextField();
@@ -27,7 +28,6 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     }
 
     public PanelMainPlay(){
-        initPanelMainPlay();
     }
 
     private void initPanelMainPlay(){
