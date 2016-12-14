@@ -8,10 +8,7 @@ import com.imie.unicorn.view.Message;
 import jaco.mp3.player.MP3Player;
 
 import java.io.*;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
-import java.net.SocketException;
+import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -35,7 +32,7 @@ public class Client {
 
     public Client() throws IOException, ClassNotFoundException {
         selector = Selector.open();
-        InetSocketAddress isa = new InetSocketAddress("127.0.0.1", 3000);
+        InetSocketAddress isa = new InetSocketAddress("10.4.1.14", 14659);
         sc = SocketChannel.open(isa);
 
         sc.configureBlocking(false);
@@ -50,9 +47,7 @@ public class Client {
                 if (key.isReadable()) {
                     SocketChannel sc = (SocketChannel) key.channel();
                     this.buffer = ByteBuffer.allocate(1024);
-
                     traiterMessage(read(sc, this.buffer));
-
                     key.interestOps(SelectionKey.OP_READ);
                 }
             }
@@ -64,6 +59,8 @@ public class Client {
             System.out.println("CONNNEXION");
             this.getPlayerList();
         } else if (message.getKey().equals("List_Players")) {
+            JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
+        } else if (message.getKey().equals("PlayerReady")) {
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
         }
     }
@@ -95,7 +92,7 @@ public class Client {
     }
 
     public void getConnection(String pseudo) throws IOException {
-        Message message = new Message("Connexion", new Player(sc.getLocalAddress().toString(), pseudo, 0, false));
+        Message message = new Message("Connexion", new Player(InetAddress.getLocalHost().getHostAddress(), pseudo, 0, false));
         send(message, this.sc);
     }
 
@@ -109,7 +106,8 @@ public class Client {
     }
 
     public void playerReady() throws IOException {
-        this.sendMessage(new Message("playerReady", null));
+        Message message = new Message("PlayerReady", player);
+        send(message, this.sc);
     }
 
     public Track getCurrentTrack(){

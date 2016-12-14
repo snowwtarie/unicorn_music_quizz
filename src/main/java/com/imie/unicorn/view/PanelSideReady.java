@@ -1,7 +1,6 @@
 package com.imie.unicorn.view;
 
 import com.imie.unicorn.controller.Player;
-import com.imie.unicorn.model.Client;
 
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
@@ -28,6 +27,7 @@ public class PanelSideReady extends JPanel implements ActionListener {
 
         try {
             ipLocale = InetAddress.getLocalHost().getHostAddress();
+            System.out.println(ipLocale);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

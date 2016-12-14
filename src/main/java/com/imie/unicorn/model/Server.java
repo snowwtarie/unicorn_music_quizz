@@ -26,7 +26,7 @@ public class Server {
 
         selector = Selector.open();
         ServerSocketChannel server = ServerSocketChannel.open();
-        InetSocketAddress isa = new InetSocketAddress("127.0.0.1", 3000);
+        InetSocketAddress isa = new InetSocketAddress("10.4.1.14", 14659);
 
         server.socket().bind(isa);
         server.configureBlocking(false);
@@ -86,6 +86,10 @@ public class Server {
         } else if (message.getKey().equals("List_Players")) {
             send(new Message("List_Players", UnicornCore.getUnicornCore().getPlayerList()), sc);
             System.out.println("LISTPLAYER");
+        } else if (message.getKey().equals("PlayerReady")) {
+            UnicornCore.getUnicornCore().getPlayerList().get((Player) message.getValue()).setIsReady(true);
+            send(new Message("PlayerReady", UnicornCore.getUnicornCore().getPlayerList()), sc);
+            System.out.println("Ready");
         }
     }
 
