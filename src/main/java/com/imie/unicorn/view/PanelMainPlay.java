@@ -56,7 +56,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         wrongProp.setBackground(Color.WHITE);
         wrongProp.setPreferredSize(new DimensionUIResource(800, 100));
 
-        Icon rockUnicorn = new ImageIcon(getClass().getClassLoader().getResource("rockon.jpg"));
+        Icon rockUnicorn = new ImageIcon(getClass().getClassLoader().getResource("unicorn.gif"));
         JLabel rockUni = new JLabel(rockUnicorn);
 
         progress.setLayout(new BorderLayout());
