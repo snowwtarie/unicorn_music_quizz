@@ -8,8 +8,10 @@ import com.imie.unicorn.view.Message;
 import jaco.mp3.player.MP3Player;
 
 import java.io.*;
+import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -67,6 +69,9 @@ public class Client {
                             String content = "";
 
                             System.out.println("Server >> " + read(sc, buff).getValue());
+                            if(read(sc, buff).getValue().equals("connection")){
+
+                            }
                             key.interestOps(SelectionKey.OP_READ);
                         }
                     }
@@ -95,9 +100,8 @@ public class Client {
 
         return (Message) ois.readObject();
     }
-
-    private Message sendMessage(Message message){
-        return null;
+    private Message sendMessage(Message message) throws IOException {
+        this.send(message, sc);
     }
     //Methode qui sera utilisée en reception par le client
     private Message receiveMessage(Message message){
@@ -113,28 +117,32 @@ public class Client {
         return true;
     }
 
-    public HashMap<String, Player> playerList(){
+    public HashMap<String, Player> playerList() throws IOException {
         return (HashMap<String, Player>) this.sendMessage(new Message("playerList", null)).getValue();
     }
 
-    public void playerReady(){
+    public void playerReady() throws IOException {
         this.sendMessage(new Message("playerReady", null));
     }
 
     public Track getCurrentTrack(){
-        return this.currentTrack;
+        try {
+            return this.currentTrack;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public boolean checkProposition(String proposition){
+    public boolean checkProposition(String proposition) throws IOException {
         Boolean b = (Boolean) this.sendMessage(new Message("proposition", proposition)).getValue();
         if(b)
             playerMp3.interrupt();
         return b;
     }
-    public Player getRoundWinner(){
+    public Player getRoundWinner() throws IOException {
         return (Player) this.sendMessage(new Message("winner", null)).getValue();
     }
-    public Player getGameWinner(){
+    public Player getGameWinner() throws IOException {
         return (Player) this.sendMessage(new Message("gameWinner", null)).getValue();
     }
 
@@ -144,12 +152,19 @@ public class Client {
         this.playerMp3.play();
     }
 
-
-
-
-
     public static void main(String[] args) throws IOException {
         new Client().init();
+    }
+
+    private void searchServer(){
+        try{
+            DatagramSocket socket = new DatagramSocket();
+            socket.setBroadcast(true);
+            byte[] sendData = "connectionRequest".getBytes();
+
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 
 }
