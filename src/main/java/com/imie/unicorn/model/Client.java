@@ -26,6 +26,9 @@ public class Client {
     private SocketChannel sc = null;
     private SelectionKey clientKey;
     private JFenetre fenetre = JFenetre.getInstance();
+    private Player player;
+    private HashMap<String, Player> listeJoueurs;
+    private Track currentTrack;
     private PlayerMp3 playerMp3 = null;
 
     private void init() throws IOException {
@@ -45,16 +48,9 @@ public class Client {
         String msg = null;
 
         while (scan.hasNextLine()) {
-
-            /**
-             * TODO: - transmettre l'objet Message via ByteBuffer
-             */
             msg = scan.nextLine();
             Message message = new Message("String", msg);
             send(message, sc);
-            //this.clientKey.attach(new Message("String", msg));
-            //sc.write(ByteBuffer.wrap(msg.getBytes()));
-            //sc.write(charset.encode(scan.nextLine()));
         }
     }
 
@@ -69,14 +65,6 @@ public class Client {
                             SocketChannel sc = (SocketChannel) key.channel();
                             ByteBuffer buff = ByteBuffer.allocate(1024);
                             String content = "";
-
-
-                            /*while (sc.read(buff) > 0) {
-                                sc.read(buff);
-                                buff.flip();
-                                content += charset.decode(buff);
-                                buff.clear();
-                            }*/
 
                             System.out.println("Server >> " + read(sc, buff).getValue());
                             key.interestOps(SelectionKey.OP_READ);
@@ -107,6 +95,7 @@ public class Client {
 
         return (Message) ois.readObject();
     }
+
     private Message sendMessage(Message message){
         return null;
     }
@@ -115,8 +104,13 @@ public class Client {
         return null;
     }
 
-    public boolean getConnection(String pseudo){
-        return (Boolean) this.sendMessage(new Message("connection", new String("pseudo"))).getValue();
+    public boolean getConnection(String pseudo) throws IOException {
+        Message message = new Message("connection", pseudo);
+        this.player = new Player(this.sc.getLocalAddress().toString(), pseudo, 0, false);
+        send(message, this.sc);
+        this.fenetre.launchUI();
+
+        return true;
     }
 
     public HashMap<String, Player> playerList(){
@@ -128,7 +122,7 @@ public class Client {
     }
 
     public Track getCurrentTrack(){
-        return (Track) this.sendMessage(new Message("currentTrack", null)).getValue();
+        return this.currentTrack;
     }
 
     public boolean checkProposition(String proposition){
