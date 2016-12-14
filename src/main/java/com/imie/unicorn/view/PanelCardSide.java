@@ -1,13 +1,11 @@
 package com.imie.unicorn.view;
 
-import com.imie.unicorn.controller.Client;
+import com.imie.unicorn.controller.Player;
 
 import javax.swing.*;
-import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by Stibo on 30/11/2016.
@@ -25,7 +23,7 @@ public class PanelCardSide extends JPanel {
         return panelSideScore;
     }
 
-    public PanelCardSide(){
+    public PanelCardSide() throws IOException {
         panelSideReady = new PanelSideReady();
         panelSideScore = new PanelSideScore();
 

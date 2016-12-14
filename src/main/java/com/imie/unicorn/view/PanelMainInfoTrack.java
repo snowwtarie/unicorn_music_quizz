@@ -1,6 +1,5 @@
 package com.imie.unicorn.view;
 
-import com.imie.unicorn.controller.Client;
 import com.imie.unicorn.controller.Player;
 import com.imie.unicorn.controller.Track;
 
@@ -26,7 +25,7 @@ public class PanelMainInfoTrack extends JPanel {
 
     }
 
-    public void initPanelMainInfoTrack(){
+    public void initPanelMainInfoTrack() throws IOException {
         Track lastTrack = JFenetre.getInstance().getClient().getCurrentTrack();
 
         URL url = null;
@@ -73,7 +72,7 @@ public class PanelMainInfoTrack extends JPanel {
         this.add(infos , BorderLayout.SOUTH);
     }
 
-    public void newInfoTrack(){
+    public void newInfoTrack() throws IOException {
         this.removeAll();
         initPanelMainInfoTrack();
         this.repaint();

@@ -1,10 +1,10 @@
 package com.imie.unicorn.view;
 
-import com.imie.unicorn.controller.Client;
 import com.imie.unicorn.controller.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -17,7 +17,7 @@ public class PanelSideScore extends JPanel{
 
     }
 
-    public void initPanelSideScore(){
+    public void initPanelSideScore() throws IOException {
         HashMap<String, Player> joueurs = JFenetre.getInstance().getClient().playerList();
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.setLayout(new GridLayout(0,2));
@@ -49,7 +49,7 @@ public class PanelSideScore extends JPanel{
         return joueur;
     }
 
-    public void refreshScore(){
+    public void refreshScore() throws IOException {
         this.removeAll();
         initPanelSideScore();
         this.repaint();

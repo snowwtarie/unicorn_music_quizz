@@ -3,6 +3,7 @@ package com.imie.unicorn.view;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by Stibo on 30/11/2016.
@@ -21,7 +22,7 @@ public class PanelBorder extends JPanel {
         return panelCardSide;
     }
 
-    public PanelBorder(){
+    public PanelBorder() throws IOException {
         panelCardMain = new PanelCardMain();
         panelCardSide = new PanelCardSide();
 
@@ -35,6 +36,8 @@ public class PanelBorder extends JPanel {
 
         this.getComponent(1).setBackground(Color.BLUE);
         this.getComponent(1).setPreferredSize(new DimensionUIResource(350, 800));
+
+        this.setVisible(true);
     }
 
 

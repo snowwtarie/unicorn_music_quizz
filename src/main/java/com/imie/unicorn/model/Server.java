@@ -69,12 +69,23 @@ public class Server {
 
                             if (channel instanceof SocketChannel) {
                                 SocketChannel to = (SocketChannel) channel;
-                                send(message, to);
+                                traiterMessage(message, to);
                             }
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void traiterMessage(Message message, SocketChannel sc) throws IOException {
+        if (message.getKey().equals("Connexion")) {
+            UnicornCore.getUnicornCore().addPlayer((Player) message.getValue());
+            System.out.println("CONNNEXION");
+            send(new Message("Connexion", null), sc);
+        } else if (message.getKey().equals("List_Players")) {
+            send(new Message("List_Players", UnicornCore.getUnicornCore().getPlayerList()), sc);
+            System.out.println("LISTPLAYER");
         }
     }
 
