@@ -73,9 +73,6 @@ public class Client {
                             String content = "";
 
                             System.out.println("Server >> " + read(sc, buff).getValue());
-                            if(read(sc, buff).getValue().equals("connection")){
-
-                            }
                             key.interestOps(SelectionKey.OP_READ);
                         }
                     }
@@ -98,15 +95,14 @@ public class Client {
 
     public Message read(SocketChannel socketChannel, ByteBuffer buffer) throws IOException, ClassNotFoundException {
         socketChannel.read(buffer);
-
         ByteArrayInputStream bais = new ByteArrayInputStream(buffer.array());
         ObjectInputStream ois = new ObjectInputStream(bais);
-
         return (Message) ois.readObject();
     }
-    private Message sendMessage(Message message) throws IOException {
-        this.send(message, sc);
+    private Message sendMessage(Message message){
+        return null;
     }
+
     //Methode qui sera utilisée en reception par le client
     private Message receiveMessage(Message message){
 
@@ -152,19 +148,12 @@ public class Client {
         this.playerMp3.play();
     }
 
+
+
+
+
     public static void main(String[] args) throws IOException {
         new Client().init();
-    }
-
-    private void searchServer(){
-        try{
-            DatagramSocket socket = new DatagramSocket();
-            socket.setBroadcast(true);
-            byte[] sendData = "connectionRequest".getBytes();
-
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
     }
 
 }

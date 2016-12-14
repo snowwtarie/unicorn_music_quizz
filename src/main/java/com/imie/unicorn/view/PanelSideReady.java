@@ -23,6 +23,7 @@ public class PanelSideReady extends JPanel implements ActionListener {
     public PanelSideReady(){
 
     }
+
     public void initPanelSideReady(){
         HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
         try {
