@@ -1,9 +1,11 @@
 package com.imie.unicorn.controller;
 
+import java.io.Serializable;
+
 /**
  * Created by Yornletard on 30/11/2016.
  */
-public class Player {
+public class Player implements Serializable {
 
     private String idPlayer;
     private String ip;

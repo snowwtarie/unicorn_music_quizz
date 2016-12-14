@@ -1,13 +1,13 @@
 package com.imie.unicorn.view;
 
 
-import com.imie.unicorn.controller.Client;
 import com.imie.unicorn.controller.Track;
 
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 /**
 * Created by Stibo on 30/11/2016.
@@ -30,7 +30,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     public PanelMainPlay(){
     }
 
-    public void initPanelMainPlay(){
+    public void initPanelMainPlay() throws IOException {
         Track currentTrack = JFenetre.getInstance().getClient().getCurrentTrack();
         int numberSong = currentTrack.getId();
         label.setText("Chanson "+numberSong+"/25");
@@ -95,7 +95,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         this.setVisible(true);
     }
 
-    public void refreshPanelMainPlay(){
+    public void refreshPanelMainPlay() throws IOException {
         this.removeAll();
         initPanelMainPlay();
         this.repaint();
@@ -116,7 +116,11 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
                 bar.setValue( val ) ;
                 try {Thread.sleep(10);} catch ( InterruptedException e) {}
             }
-            JFenetre.getInstance().trackFinish();
+            try {
+                JFenetre.getInstance().trackFinish();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -133,7 +137,12 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Boolean trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
+        Boolean trackFound = null;
+        try {
+            trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
         if(!trackFound){
             jProposition.setText("");
             wrongProp.setText("Faux, Essaie Encore !");
@@ -153,7 +162,12 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER){
-            Boolean trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
+            Boolean trackFound = null;
+            try {
+                trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
             if(!trackFound){
                 jProposition.setText("");
                 wrongProp.setText("Faux, Essaie Encore !");

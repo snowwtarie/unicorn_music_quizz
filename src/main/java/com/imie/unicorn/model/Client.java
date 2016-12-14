@@ -23,66 +23,48 @@ import java.util.Scanner;
 
 public class Client {
 
+    private ByteBuffer buffer;
     private Selector selector;
     private Charset charset = Charset.forName("UTF-8");
     private SocketChannel sc = null;
     private SelectionKey clientKey;
-    private JFenetre fenetre = JFenetre.getInstance();
     private Player player;
     private HashMap<String, Player> listeJoueurs;
     private Track currentTrack;
     private PlayerMp3 playerMp3 = null;
 
-    private void init() throws IOException {
+    public Client() throws IOException, ClassNotFoundException {
         selector = Selector.open();
         InetSocketAddress isa = new InetSocketAddress("127.0.0.1", 3000);
         sc = SocketChannel.open(isa);
 
         sc.configureBlocking(false);
         clientKey = sc.register(selector, SelectionKey.OP_READ);
+    }
 
-        new ClientThread().start();
+    public void init() throws IOException, ClassNotFoundException {
+        while (selector.select() > 0) {
+            for (SelectionKey key : selector.selectedKeys()) {
+                selector.selectedKeys().remove(key);
 
-        fenetre.setClient(this);
-        fenetre.init();
+                if (key.isReadable()) {
+                    SocketChannel sc = (SocketChannel) key.channel();
+                    this.buffer = ByteBuffer.allocate(1024);
 
-        Scanner scan = new Scanner(System.in);
-        String msg = null;
+                    traiterMessage(read(sc, this.buffer));
 
-        while (scan.hasNextLine()) {
-            msg = scan.nextLine();
-            Message message = new Message("String", msg);
-            send(message, sc);
+                    key.interestOps(SelectionKey.OP_READ);
+                }
+            }
         }
     }
 
-    private class ClientThread extends Thread {
-        private ByteBuffer buffer;
-
-        public void run() {
-            try {
-                while (selector.select() > 0) {
-                    for (SelectionKey key : selector.selectedKeys()) {
-                        selector.selectedKeys().remove(key);
-
-                        if (key.isReadable()) {
-                            SocketChannel sc = (SocketChannel) key.channel();
-                            this.buffer = ByteBuffer.allocate(1024);
-                            String content = "";
-
-                            System.out.println("Server >> " + read(sc, buffer).getValue());
-                            if(read(sc, this.buffer).getValue().equals("connection")){
-
-                            }
-                            key.interestOps(SelectionKey.OP_READ);
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+    public void traiterMessage(Message message) throws IOException {
+        if (message.getKey().equals("Connexion")) {
+            System.out.println("CONNNEXION");
+            this.getPlayerList();
+        } else if (message.getKey().equals("List_Players")) {
+            JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
         }
     }
 
@@ -102,21 +84,24 @@ public class Client {
 
         return (Message) ois.readObject();
     }
-    private void sendMessage(Message message) throws IOException {
+
+    private Message sendMessage(Message message) throws IOException {
         this.send(message, sc);
+        return null;
     }
     //Methode qui sera utilisée en reception par le client
     private Message receiveMessage(Message message){
         return null;
     }
 
-    public boolean getConnection(String pseudo) throws IOException {
-        Message message = new Message("connection", pseudo);
-        this.player = new Player(this.sc.getLocalAddress().toString(), pseudo, 0, false);
+    public void getConnection(String pseudo) throws IOException {
+        Message message = new Message("Connexion", new Player(sc.getLocalAddress().toString(), pseudo, 0, false));
         send(message, this.sc);
-        this.fenetre.launchUI();
+    }
 
-        return true;
+    public void getPlayerList() throws IOException {
+        Message message = new Message("List_Players", null);
+        send(message, this.sc);
     }
 
     public HashMap<String, Player> playerList() throws IOException {
@@ -150,8 +135,11 @@ public class Client {
         this.playerMp3.play();
     }
 
-    public static void main(String[] args) throws IOException {
-        new Client().init();
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        Client client = new Client();
+        JFenetre.getInstance().setClient(client);
+        JFenetre.getInstance().init();
+        client.init();
     }
 
     private void searchServer(){

@@ -1,5 +1,6 @@
 package com.imie.unicorn.view;
 
+import com.imie.unicorn.controller.Player;
 import com.imie.unicorn.model.Client;
 
 import javax.swing.*;
@@ -7,13 +8,14 @@ import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by Stibo on 30/11/2016.
  * Fenetre Principale
  */
 public class JFenetre extends JFrame {
-    private static JFenetre instance = new JFenetre();
+    private static JFenetre jFenetre;
     public static Font robotoFont;
     public static Font unicornFont;
     private static PanelBorder panelBorder;
@@ -24,69 +26,64 @@ public class JFenetre extends JFrame {
         return client;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-
-
-    private JFenetre(){
+    private JFenetre() throws IOException {
         this.setTitle ("Unicorn Music Quizzz");
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.setSize(new DimensionUIResource(1210, 800));
-        this.setBackground(Color.RED);
-        this.setVisible(true);
         this.setLocationRelativeTo ( null ) ;
         this.setResizable(false);
-
-
+        this.setVisible(true);
     }
 
     public void init() throws IOException {
 
-        try {
-            //create the font to use. Specify the size!
-            robotoFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/Roboto-Regular.ttf")).deriveFont(24f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/Roboto-Regular.ttf")));
-
-        } catch (IOException e) {
-            robotoFont = new Font("Serif", Font.PLAIN, 14);
-            e.printStackTrace();
-        } catch(FontFormatException e) {
-            robotoFont = new Font("Serif", Font.PLAIN, 14);
-            e.printStackTrace();
-        }
-
-        try {
-            //create the font to use. Specify the size!
-            unicornFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/LostinWild.ttf")).deriveFont(30f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            //register the font
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/LostinWild.ttf")));
-
-        } catch (IOException e) {
-            unicornFont = new Font("Serif", Font.PLAIN, 14);
-            e.printStackTrace();
-        } catch(FontFormatException e) {
-            unicornFont = new Font("Serif", Font.PLAIN, 14);
-            e.printStackTrace();
-        }
-
-        getInstance();
         JOptionPane jOptionPane = new JOptionPane();
         String pseudo = jOptionPane.showInputDialog(null, "Veuillez saisir votre pseudo", "Unicorn Pseudo", JOptionPane.QUESTION_MESSAGE);
-        boolean connexion = (Boolean) client.getConnection(pseudo);
-        if (connexion) {
+        client.getConnection(pseudo);
+
+            try {
+                //create the font to use. Specify the size!
+                robotoFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/Roboto-Regular.ttf")).deriveFont(24f);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                //register the font
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/Roboto-Regular.ttf")));
+
+            } catch (IOException e) {
+                robotoFont = new Font("Serif", Font.PLAIN, 14);
+                e.printStackTrace();
+            } catch(FontFormatException e) {
+                robotoFont = new Font("Serif", Font.PLAIN, 14);
+                e.printStackTrace();
+            }
+
+            try {
+                //create the font to use. Specify the size!
+                unicornFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/LostinWild.ttf")).deriveFont(30f);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                //register the font
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/main/res/LostinWild.ttf")));
+
+            } catch (IOException e) {
+                unicornFont = new Font("Serif", Font.PLAIN, 14);
+                e.printStackTrace();
+            } catch(FontFormatException e) {
+                unicornFont = new Font("Serif", Font.PLAIN, 14);
+                e.printStackTrace();
+            }
+
             panelBorder = new PanelBorder();
-            JFenetre.instance.setContentPane(panelBorder);
-            JFenetre.instance.setVisible(true);
-        }
+            jFenetre.setContentPane(panelBorder);
+            jFenetre.setVisible(true);
+
+
+
     }
 
-    public static JFenetre getInstance(){
-        return JFenetre.instance;
+    public static JFenetre getInstance() throws IOException {
+        if (jFenetre == null)
+            jFenetre = new JFenetre();
+
+        return jFenetre;
     }
 
     public static PanelBorder getPanelBorder() {
@@ -94,27 +91,27 @@ public class JFenetre extends JFrame {
     }
 
     public void launchUI(){
-        panelBorder = new PanelBorder();
-        JFenetre.instance.setContentPane(panelBorder);
-        JFenetre.instance.setVisible(true);
-        getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "wait");
-        getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "ready");
-        getPanelBorder().getPanelCardSide().getPanelSideReady().initPanelSideReady();
+        //panelBorder = new PanelBorder();
+        //JFenetre.instance.setContentPane(panelBorder);
+        //getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "wait");
+        //getPanelBorder().getPanelCardSide().getPanelSideReady().initPanelSideReady();
+        //getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "ready");
+        //JFenetre.instance.setVisible(true);
     }
 
-    public void refreshReadyPlayers(){
-        PanelBorder.getPanelCardSide().getPanelSideReady().refreshPlayers();
+    public void refreshReadyPlayers(HashMap<String, Player> playerHashMap) throws IOException {
+        PanelBorder.getPanelCardSide().getPanelSideReady().refreshPlayers(playerHashMap);
     }
 
-    public void refreshScore(){
+    public void refreshScore() throws IOException {
         PanelBorder.getPanelCardSide().getPanelSideScore().refreshScore();
     }
 
-    public void newRoundSong(){
+    public void newRoundSong() throws IOException {
         getPanelBorder().getPanelCardMain().getPanelMainPlay().refreshPanelMainPlay();
     }
 
-    public void newInfoSong(){
+    public void newInfoSong() throws IOException {
         getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack();
     }
 
@@ -129,9 +126,13 @@ public class JFenetre extends JFrame {
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
     }
 
-    public void gameFinish(){
+    public void gameFinish() throws IOException {
         panelFinal = new PanelFinal();
-        JFenetre.instance.setContentPane(panelFinal);
-        JFenetre.instance.setVisible(true);
+        jFenetre.setContentPane(panelFinal);
+        jFenetre.setVisible(true);
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

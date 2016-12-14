@@ -1,13 +1,14 @@
 package com.imie.unicorn.view;
 
-import com.imie.unicorn.controller.Client;
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.model.Client;
 
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
@@ -20,12 +21,11 @@ public class PanelSideReady extends JPanel implements ActionListener {
     private JCheckBox readyBox = new JCheckBox("Ready ?");
     private String ipLocale;
 
-    public PanelSideReady(){
-
+    public PanelSideReady() throws IOException {
+        initPanelSideReady(new HashMap<String, Player>());
     }
+    public void initPanelSideReady(HashMap<String, Player> playerHashMap) throws IOException {
 
-    public void initPanelSideReady(){
-        HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
         try {
             ipLocale = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
@@ -45,7 +45,7 @@ public class PanelSideReady extends JPanel implements ActionListener {
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.add(pseudo);
         this.add(ready);
-        for(Map.Entry<String, Player> p : joueurs.entrySet()) {
+        for(Map.Entry<String, Player> p : playerHashMap.entrySet()) {
             if(p.getValue().getIp().equals(ipLocale)){
                 JLabel myself = new JLabel("You");
                 myself.setFont(JFenetre.robotoFont.deriveFont(20f));
@@ -76,17 +76,23 @@ public class PanelSideReady extends JPanel implements ActionListener {
         return joueur;
     }
 
-    public void refreshPlayers(){
+    public void refreshPlayers(HashMap<String, Player> playerHashMap) throws IOException {
         this.removeAll();
-        initPanelSideReady();
+        initPanelSideReady(playerHashMap);
         this.repaint();
         this.revalidate();
+
+        System.out.println("REFRESH PLAYERS");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (readyBox.isSelected()){
-            JFenetre.getInstance().getClient().playerReady();
+            try {
+                JFenetre.getInstance().getClient().playerReady();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.imie.unicorn.view;
 
-import com.imie.unicorn.controller.Client;
 import com.imie.unicorn.controller.Player;
 
 import javax.swing.*;
@@ -8,6 +7,7 @@ import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created by Stibo on 12/12/2016.
@@ -17,11 +17,11 @@ public class PanelFinal extends JPanel implements ActionListener {
     private JButton reload = new JButton("Relancer");
 
 
-    public PanelFinal(){
+    public PanelFinal() throws IOException {
         initPanelFinal();
     }
 
-    private void initPanelFinal(){
+    private void initPanelFinal() throws IOException {
         Player gameWinner = JFenetre.getInstance().getClient().getGameWinner();
         message.setText(gameWinner.getPseudo()+" est le vainqueur, Felicitations !");
 
@@ -35,7 +35,7 @@ public class PanelFinal extends JPanel implements ActionListener {
         this.add(reload, BorderLayout.SOUTH);
     }
 
-    public void refreshPanelFinal(){
+    public void refreshPanelFinal() throws IOException {
         this.removeAll();
         initPanelFinal();
         this.repaint();
@@ -45,7 +45,11 @@ public class PanelFinal extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == reload) {
-            JFenetre.getInstance().launchUI();
+            try {
+                JFenetre.getInstance().launchUI();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
