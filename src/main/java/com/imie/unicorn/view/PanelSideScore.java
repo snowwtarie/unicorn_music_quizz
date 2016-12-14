@@ -17,7 +17,7 @@ public class PanelSideScore extends JPanel{
 
     }
 
-    private void initPanelSideScore(){
+    public void initPanelSideScore(){
         HashMap<String, Player> joueurs = JFenetre.getInstance().getClient().playerList();
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.setLayout(new GridLayout(0,2));

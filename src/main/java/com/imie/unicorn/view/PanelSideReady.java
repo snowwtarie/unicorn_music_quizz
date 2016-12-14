@@ -21,9 +21,9 @@ public class PanelSideReady extends JPanel implements ActionListener {
     private String ipLocale;
 
     public PanelSideReady(){
-        
+
     }
-    private void initPanelSideReady(){
+    public void initPanelSideReady(){
         HashMap<String, Player> joueurs = (HashMap<String, Player>) Client.getClient().getRequest(new Message("InitOtherPlayer", null)).getValue();
         try {
             ipLocale = InetAddress.getLocalHost().getHostAddress();

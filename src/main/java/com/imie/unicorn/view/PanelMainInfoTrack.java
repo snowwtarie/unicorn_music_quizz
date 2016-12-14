@@ -26,7 +26,7 @@ public class PanelMainInfoTrack extends JPanel {
 
     }
 
-    private void initPanelMainInfoTrack(){
+    public void initPanelMainInfoTrack(){
         Track lastTrack = JFenetre.getInstance().getClient().getCurrentTrack();
 
         URL url = null;

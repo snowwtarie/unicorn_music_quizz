@@ -30,7 +30,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     public PanelMainPlay(){
     }
 
-    private void initPanelMainPlay(){
+    public void initPanelMainPlay(){
         Track currentTrack = JFenetre.getInstance().getClient().getCurrentTrack();
         int numberSong = currentTrack.getId();
         label.setText("Chanson "+numberSong+"/25");
