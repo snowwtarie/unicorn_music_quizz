@@ -99,6 +99,7 @@ public class JFenetre extends JFrame {
         JFenetre.instance.setVisible(true);
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "wait");
         getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "ready");
+        getPanelBorder().getPanelCardSide().getPanelSideReady().initPanelSideReady();
     }
 
     public void refreshReadyPlayers(){
