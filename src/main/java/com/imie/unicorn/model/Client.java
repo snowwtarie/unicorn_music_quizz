@@ -92,7 +92,8 @@ public class Client {
     }
 
     public void getConnection(String pseudo) throws IOException {
-        Message message = new Message("Connexion", new Player(InetAddress.getLocalHost().getHostAddress(), pseudo, 0, false));
+        player = new Player(InetAddress.getLocalHost().getHostAddress(), pseudo, 0, false);
+        Message message = new Message("Connexion", player);
         send(message, this.sc);
     }
 

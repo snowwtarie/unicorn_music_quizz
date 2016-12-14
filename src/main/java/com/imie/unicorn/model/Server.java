@@ -87,6 +87,8 @@ public class Server {
             send(new Message("List_Players", UnicornCore.getUnicornCore().getPlayerList()), sc);
             System.out.println("LISTPLAYER");
         } else if (message.getKey().equals("PlayerReady")) {
+            Message msg = message;
+            System.out.println(message.getValue().toString());
             UnicornCore.getUnicornCore().getPlayerList().get((Player) message.getValue()).setIsReady(true);
             send(new Message("PlayerReady", UnicornCore.getUnicornCore().getPlayerList()), sc);
             System.out.println("Ready");

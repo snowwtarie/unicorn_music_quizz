@@ -31,6 +31,7 @@ public class UnicornCore {
         if (unicornCore == null) {
             unicornCore = new UnicornCore();
         }
+        System.out.println();
         return unicornCore;
     }
 
@@ -64,9 +65,9 @@ public class UnicornCore {
     }
 
     private void getAllTrack(int idPlaylist) throws IOException {
-        System.out.println("UnicornCore : getting track list by deezer API...");
-        DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
-        this.listTrack = deezerAPI.getListTrack();
+        //System.out.println("UnicornCore : getting track list by deezer API...");
+        //DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
+        //this.listTrack = deezerAPI.getListTrack();
     }
 
     public boolean checkIfAllReady(){
