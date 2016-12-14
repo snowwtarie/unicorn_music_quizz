@@ -1,9 +1,11 @@
 package com.imie.unicorn.view;
 
+import java.io.Serializable;
+
 /**
  * Created by Stibo on 30/11/2016.
  */
-public class Message {
+public class Message implements Serializable {
 
     private String key;
     private Object value;

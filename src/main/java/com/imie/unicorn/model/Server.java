@@ -50,16 +50,8 @@ public class Server {
                     String content = "";
                     Message message = null;
 
-                    //this.message = (Message) key.attachment();
-
                     try {
                         message = read(sc, buff);
-
-                        /*while (sc.read(buff) > 0) {
-                            buff.flip();
-                            content += charset.decode(buff);
-                            buff.clear();
-                        }*/
 
                         System.out.println("Client << " + message.getValue());
                         key.interestOps(SelectionKey.OP_READ);

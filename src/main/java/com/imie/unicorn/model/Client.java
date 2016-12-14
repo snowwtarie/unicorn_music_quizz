@@ -28,6 +28,9 @@ public class Client {
     private SocketChannel sc = null;
     private SelectionKey clientKey;
     private JFenetre fenetre = JFenetre.getInstance();
+    private Player player;
+    private HashMap<String, Player> listeJoueurs;
+    private Track currentTrack;
     private PlayerMp3 playerMp3 = null;
 
     private void init() throws IOException {
@@ -47,20 +50,15 @@ public class Client {
         String msg = null;
 
         while (scan.hasNextLine()) {
-
-            /**
-             * TODO: - transmettre l'objet Message via ByteBuffer
-             */
             msg = scan.nextLine();
             Message message = new Message("String", msg);
             send(message, sc);
-            //this.clientKey.attach(new Message("String", msg));
-            //sc.write(ByteBuffer.wrap(msg.getBytes()));
-            //sc.write(charset.encode(scan.nextLine()));
         }
     }
 
     private class ClientThread extends Thread {
+        private ByteBuffer buffer;
+
         public void run() {
             try {
                 while (selector.select() > 0) {
@@ -69,10 +67,13 @@ public class Client {
 
                         if (key.isReadable()) {
                             SocketChannel sc = (SocketChannel) key.channel();
-                            ByteBuffer buff = ByteBuffer.allocate(1024);
+                            this.buffer = ByteBuffer.allocate(1024);
                             String content = "";
 
-                            System.out.println("Server >> " + read(sc, buff).getValue());
+                            System.out.println("Server >> " + read(sc, buffer).getValue());
+                            if(read(sc, this.buffer).getValue().equals("connection")){
+
+                            }
                             key.interestOps(SelectionKey.OP_READ);
                         }
                     }
@@ -95,26 +96,31 @@ public class Client {
 
     public Message read(SocketChannel socketChannel, ByteBuffer buffer) throws IOException, ClassNotFoundException {
         socketChannel.read(buffer);
+
         ByteArrayInputStream bais = new ByteArrayInputStream(buffer.array());
         ObjectInputStream ois = new ObjectInputStream(bais);
+
         return (Message) ois.readObject();
     }
-    private Message sendMessage(Message message){
-        return null;
+    private void sendMessage(Message message) throws IOException {
+        this.send(message, sc);
     }
-
     //Methode qui sera utilisée en reception par le client
     private Message receiveMessage(Message message){
-
         return null;
     }
 
     public boolean getConnection(String pseudo) throws IOException {
-        return (Boolean) this.sendMessage(new Message("connection", new String("pseudo"))).getValue();
+        Message message = new Message("connection", pseudo);
+        this.player = new Player(this.sc.getLocalAddress().toString(), pseudo, 0, false);
+        send(message, this.sc);
+        this.fenetre.launchUI();
+
+        return true;
     }
 
     public HashMap<String, Player> playerList() throws IOException {
-        return (HashMap<String, Player>) this.sendMessage(new Message("playerList", null)).getValue();
+        return new HashMap<String, Player>();
     }
 
     public void playerReady() throws IOException {
@@ -122,11 +128,7 @@ public class Client {
     }
 
     public Track getCurrentTrack(){
-        try {
-            return (Track) this.sendMessage(new Message("currentTrack", null)).getValue();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return this.currentTrack;
     }
 
     public boolean checkProposition(String proposition) throws IOException {
@@ -148,12 +150,19 @@ public class Client {
         this.playerMp3.play();
     }
 
-
-
-
-
     public static void main(String[] args) throws IOException {
         new Client().init();
+    }
+
+    private void searchServer(){
+        try{
+            DatagramSocket socket = new DatagramSocket();
+            socket.setBroadcast(true);
+            byte[] sendData = "connectionRequest".getBytes();
+
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 
 }

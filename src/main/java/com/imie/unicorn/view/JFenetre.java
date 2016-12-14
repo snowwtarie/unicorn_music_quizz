@@ -42,7 +42,7 @@ public class JFenetre extends JFrame {
 
     }
 
-    public void init() {
+    public void init() throws IOException {
 
         try {
             //create the font to use. Specify the size!
