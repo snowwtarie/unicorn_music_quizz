@@ -1,12 +1,15 @@
 package com.imie.unicorn.model;
 
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.PlayerMp3;
 import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.view.JFenetre;
 import com.imie.unicorn.view.Message;
+import jaco.mp3.player.MP3Player;
 
 import java.io.*;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -23,6 +26,7 @@ public class Client {
     private SocketChannel sc = null;
     private SelectionKey clientKey;
     private JFenetre fenetre = JFenetre.getInstance();
+    private PlayerMp3 playerMp3 = null;
 
     private void init() throws IOException {
         selector = Selector.open();
@@ -106,6 +110,10 @@ public class Client {
     private Message sendMessage(Message message){
         return null;
     }
+    //Methode qui sera utilisée en reception par le client
+    private Message receiveMessage(Message message){
+        return null;
+    }
 
     public boolean getConnection(String pseudo){
         return (Boolean) this.sendMessage(new Message("connection", new String("pseudo"))).getValue();
@@ -124,7 +132,10 @@ public class Client {
     }
 
     public boolean checkProposition(String proposition){
-        return (Boolean) this.sendMessage(new Message("proposition", proposition)).getValue();
+        Boolean b = (Boolean) this.sendMessage(new Message("proposition", proposition)).getValue();
+        if(b)
+            playerMp3.interrupt();
+        return b;
     }
     public Player getRoundWinner(){
         return (Player) this.sendMessage(new Message("winner", null)).getValue();
@@ -132,6 +143,13 @@ public class Client {
     public Player getGameWinner(){
         return (Player) this.sendMessage(new Message("gameWinner", null)).getValue();
     }
+
+    public void playTrack() throws MalformedURLException, InterruptedException {
+        Track track = (Track) this.receiveMessage(new Message("playTrack", null)).getValue();
+        this.playerMp3 = new PlayerMp3(track);
+        this.playerMp3.play();
+    }
+
 
 
 
