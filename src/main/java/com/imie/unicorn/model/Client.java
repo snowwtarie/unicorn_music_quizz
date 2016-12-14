@@ -5,7 +5,7 @@ import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.view.JFenetre;
 import com.imie.unicorn.view.Message;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -21,6 +21,7 @@ public class Client {
     private Selector selector;
     private Charset charset = Charset.forName("UTF-8");
     private SocketChannel sc = null;
+    private SelectionKey clientKey;
     private JFenetre fenetre = JFenetre.getInstance();
 
     private void init() throws IOException {
@@ -29,7 +30,7 @@ public class Client {
         sc = SocketChannel.open(isa);
 
         sc.configureBlocking(false);
-        sc.register(selector, SelectionKey.OP_READ);
+        clientKey = sc.register(selector, SelectionKey.OP_READ);
 
         new ClientThread().start();
 
@@ -37,9 +38,19 @@ public class Client {
         fenetre.init();
 
         Scanner scan = new Scanner(System.in);
+        String msg = null;
 
         while (scan.hasNextLine()) {
-            sc.write(charset.encode(scan.nextLine()));
+
+            /**
+             * TODO: - transmettre l'objet Message via ByteBuffer
+             */
+            msg = scan.nextLine();
+            Message message = new Message("String", msg);
+            send(message, sc);
+            //this.clientKey.attach(new Message("String", msg));
+            //sc.write(ByteBuffer.wrap(msg.getBytes()));
+            //sc.write(charset.encode(scan.nextLine()));
         }
     }
 
@@ -56,22 +67,41 @@ public class Client {
                             String content = "";
 
 
-                            while (sc.read(buff) > 0) {
+                            /*while (sc.read(buff) > 0) {
                                 sc.read(buff);
                                 buff.flip();
                                 content += charset.decode(buff);
                                 buff.clear();
-                            }
+                            }*/
 
-                            System.out.println("Server >> " + content);
+                            System.out.println("Server >> " + read(sc, buff).getValue());
                             key.interestOps(SelectionKey.OP_READ);
                         }
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+    public void send(Message message, SocketChannel socketChannel) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(message);
+        oos.flush();
+        socketChannel.write(ByteBuffer.wrap(baos.toByteArray()));
+    }
+
+    public Message read(SocketChannel socketChannel, ByteBuffer buffer) throws IOException, ClassNotFoundException {
+        socketChannel.read(buffer);
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(buffer.array());
+        ObjectInputStream ois = new ObjectInputStream(bais);
+
+        return (Message) ois.readObject();
     }
     private Message sendMessage(Message message){
         return null;
@@ -109,4 +139,5 @@ public class Client {
     public static void main(String[] args) throws IOException {
         new Client().init();
     }
+
 }

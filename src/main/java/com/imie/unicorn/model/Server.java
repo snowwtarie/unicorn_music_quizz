@@ -1,5 +1,8 @@
 package com.imie.unicorn.model;
 
+import com.imie.unicorn.view.Message;
+
+import java.io.*;
 import com.imie.unicorn.controller.Player;
 import com.imie.unicorn.controller.UnicornCore;
 import com.imie.unicorn.view.Message;
@@ -22,7 +25,7 @@ public class Server {
         this.core = UnicornCore.getUnicornCore();
 
         selector = Selector.open();
-        server = ServerSocketChannel.open();
+        ServerSocketChannel server = ServerSocketChannel.open();
         InetSocketAddress isa = new InetSocketAddress("127.0.0.1", 3000);
 
         server.socket().bind(isa);
@@ -45,15 +48,20 @@ public class Server {
                     SocketChannel sc = (SocketChannel) key.channel();
                     ByteBuffer buff = ByteBuffer.allocate(1024);
                     String content = "";
+                    Message message = null;
+
+                    //this.message = (Message) key.attachment();
 
                     try {
-                        while (sc.read(buff) > 0) {
+                        message = read(sc, buff);
+
+                        /*while (sc.read(buff) > 0) {
                             buff.flip();
                             content += charset.decode(buff);
                             buff.clear();
-                        }
+                        }*/
 
-                        System.out.println("Client << " + content);
+                        System.out.println("Client << " + message.getValue());
                         key.interestOps(SelectionKey.OP_READ);
                     } catch (IOException e) {
                         key.cancel();
@@ -63,13 +71,13 @@ public class Server {
                         }
                     }
 
-                    if (content.length() > 0) {
+                    if (message != null) {
                         for (SelectionKey sk : selector.keys()) {
                             Channel channel = sk.channel();
 
                             if (channel instanceof SocketChannel) {
                                 SocketChannel to = (SocketChannel) channel;
-                                to.write(charset.encode(content));
+                                send(message, to);
                             }
                         }
                     }
@@ -78,33 +86,24 @@ public class Server {
         }
     }
 
-    private void handleReceivedMessage(Message message){
+    public Message read(SocketChannel socketChannel, ByteBuffer buffer) throws IOException, ClassNotFoundException {
+        socketChannel.read(buffer);
 
-        //Message received :
-        if(message.getKey().equals("connection")) {
-            //1 : initPlayer --> player connected, has to be added to the game. Player object expected
-            core.addPlayer((Player) message.getValue());
-        }
-         if(message.getKey().equals("playerReady")){
-             //2 : ready --> player ready to play. Player object expected
-             core.getPlayerList().get(((Player) message.getValue())).setIsReady(true);
-         }
-         if(message.getKey().equals("")){
+        ByteArrayInputStream bais = new ByteArrayInputStream(buffer.array());
+        ObjectInputStream ois = new ObjectInputStream(bais);
 
-         }
+        return (Message) ois.readObject();
     }
 
-    private Message messageAllareReady(){
-        if(core.checkIfAllReady())
-            return new Message("ready", core.getPlayerList());
-        return null;
+    public void send(Message message, SocketChannel socketChannel) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(message);
+        oos.flush();
+        socketChannel.write(ByteBuffer.wrap(baos.toByteArray()));
     }
-
-
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server();
-        server.init();
-
+        new Server().init();
     }
 }
