@@ -12,10 +12,11 @@ import java.util.HashMap;
  */
 public interface ActionServer {
 
-        public void addPlayer(Player player);
+        void addPlayer(Player player);
 
-        public HashMap<String, Player> getListPlayers();
+        HashMap<String, Player> getListPlayers();
 
         public void sendToAll(Message message) throws IOException;
 
+        void deconnexion(ThreadServer threadServer);
 }

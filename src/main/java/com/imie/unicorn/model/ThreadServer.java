@@ -27,6 +27,10 @@ public class ThreadServer extends  Thread {
     public void run() {
         while (true) {
             try {
+                if (in.read() == -1) {
+                    actionServer.deconnexion(this);
+                    break;
+                }
                 Message message = (Message) in.readObject();
                 traiterMessage(message);
             } catch (IOException | ClassNotFoundException e) {

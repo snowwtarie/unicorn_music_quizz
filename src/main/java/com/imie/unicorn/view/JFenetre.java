@@ -7,6 +7,8 @@ import com.imie.unicorn.model.Client;
 import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -79,8 +81,6 @@ public class JFenetre extends JFrame {
             jFenetre.setContentPane(panelBorder);
             jFenetre.setVisible(true);
 
-
-
     }
 
     public static JFenetre getInstance() throws IOException {
@@ -141,4 +141,6 @@ public class JFenetre extends JFrame {
     public void setClient(Client client) {
         this.client = client;
     }
+
+
 }
