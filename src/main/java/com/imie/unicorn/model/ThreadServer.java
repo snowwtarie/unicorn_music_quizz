@@ -2,6 +2,7 @@ package com.imie.unicorn.model;
 
 
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.controller.UnicornCore;
 import com.imie.unicorn.view.Message;
 
@@ -55,7 +56,8 @@ public class ThreadServer extends  Thread {
             System.out.println("Server : checking if all players ready...");
             if (UnicornCore.getUnicornCore().checkIfAllReady()){
                 System.out.println("PLAYER ARE ALL READY");
-               /// send(new Message("GameStart", UnicornCore.getUnicornCore().getCurrentUrlTrack()), sc);
+                Track track = actionServer.getCurrentTrack();
+                sendMessageWithReset(new Message("GameStart", track));
             }
         }
     }

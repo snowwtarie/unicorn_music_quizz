@@ -1,6 +1,7 @@
 package com.imie.unicorn.model;
 
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.view.Message;
 
 import java.io.IOException;
@@ -16,9 +17,11 @@ public interface ActionServer {
 
         HashMap<String, Player> getListPlayers();
 
-        public void sendToAll(Message message) throws IOException;
+        void sendToAll(Message message) throws IOException;
 
         void deconnexion(ThreadServer threadServer);
 
-    public void sendToAllWithReset(Message message) throws IOException;
+        void sendToAllWithReset(Message message) throws IOException;
+
+        Track getCurrentTrack();
 }

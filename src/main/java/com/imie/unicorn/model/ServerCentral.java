@@ -2,6 +2,7 @@ package com.imie.unicorn.model;
 
 
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.controller.UnicornCore;
 import com.imie.unicorn.view.Message;
 
@@ -45,6 +46,7 @@ public class ServerCentral extends Thread implements ActionServer{
 
     @Override
     public void addPlayer(Player player) {
+        System.out.println("SERVER >> ADD TO PLAYER LIST :"+player);
         core.addPlayer(player);
     }
 
@@ -55,6 +57,7 @@ public class ServerCentral extends Thread implements ActionServer{
 
     @Override
     public void sendToAll(Message message) throws IOException {
+        System.out.println("SERVER >> SEND TO ALL");
         for(ThreadServer t : threadServers){
             t.sendMessage(message);
         }
@@ -65,6 +68,11 @@ public class ServerCentral extends Thread implements ActionServer{
         for(ThreadServer t : threadServers){
             t.sendMessageWithReset(message);
         }
+    }
+
+    @Override
+    public Track getCurrentTrack() {
+        return core.getCurrentTrack();
     }
 
     @Override

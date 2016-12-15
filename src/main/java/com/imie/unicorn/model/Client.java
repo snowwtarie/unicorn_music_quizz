@@ -2,6 +2,7 @@ package com.imie.unicorn.model;
 
 
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.PlayerMp3;
 import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.view.JFenetre;
 import com.imie.unicorn.view.Message;
@@ -18,6 +19,7 @@ public class Client {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Player player;
+    private PlayerMp3 playerMp3;
 
     public Client() throws IOException {
         Socket socketClient = new Socket("10.4.1.14", 5000);
@@ -38,16 +40,20 @@ public class Client {
 
     public void traiterMessage(Message message) throws IOException {
         if (message.getKey().equals("Connexion")) {
+            System.out.println("Client >> Connexion");
             sendMessage(new Message("List_Players", null));
         } else if (message.getKey().equals("refreshListPlayer")) {
             System.out.println(((HashMap<String, Player>) message.getValue()).size());
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
-            System.out.println("Client >> Player List");
+            System.out.println("Client >> Refresh Player List");
         } else if (message.getKey().equals("PlayerReady")) {
             System.out.println("Client >> Player Ready");
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
         } else if (message.getKey().equals("GameStart")) {
             JFenetre.getInstance().switchtoGame((Track) message.getValue());
+            playerMp3 = new PlayerMp3((Track) message.getValue());
+            playerMp3.start();
+            System.out.println("MP3");
         }
     }
 

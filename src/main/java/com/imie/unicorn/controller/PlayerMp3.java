@@ -15,6 +15,11 @@ public class PlayerMp3 extends Thread{
 
     @Override
     public void run(){
+        try {
+            play();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         while (true) {
 
         }

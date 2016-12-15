@@ -68,6 +68,7 @@ public class UnicornCore {
         System.out.println("UnicornCore : getting track list by deezer API...");
         DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
         this.listTrack = deezerAPI.getListTrack();
+        this.currentTrack = listTrack.get(1);
     }
 
     public boolean checkIfAllReady(){
