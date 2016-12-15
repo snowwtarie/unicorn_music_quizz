@@ -38,22 +38,20 @@ public class ThreadServer extends  Thread {
     public void traiterMessage(Message message) throws IOException {
         if (message.getKey().equals("Connexion")) {
             actionServer.addPlayer((Player) message.getValue());
+            this.sendMessage(new Message("Connexion", null));
         } else if (message.getKey().equals("List_Players")) {
             sendMessage(new Message("List_Players", actionServer.getListPlayers()));
             System.out.println("LISTPLAYER");
         } else if (message.getKey().equals("PlayerReady")) {
-            /*Message msg = message;
             Player player = (Player) message.getValue();
-
             System.out.println(message.getValue().toString());
             UnicornCore.getUnicornCore().getPlayerList().get(player.getIdPlayer()).setIsReady(true);
-            send(new Message("PlayerReady", UnicornCore.getUnicornCore().getPlayerList()), sc);
             System.out.println("Ready");
             System.out.println("Server : checking if all players ready...");
             if (UnicornCore.getUnicornCore().checkIfAllReady()){
                 System.out.println("PLAYER ARE ALL READY");
-                send(new Message("GameStart", UnicornCore.getUnicornCore().getCurrentUrlTrack()), sc);
-            }*/
+               /// send(new Message("GameStart", UnicornCore.getUnicornCore().getCurrentUrlTrack()), sc);
+            }
         }
     }
 

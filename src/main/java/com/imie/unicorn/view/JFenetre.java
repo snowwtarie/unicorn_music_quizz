@@ -41,7 +41,9 @@ public class JFenetre extends JFrame {
 
         JOptionPane jOptionPane = new JOptionPane();
         String pseudo = jOptionPane.showInputDialog(null, "Veuillez saisir votre pseudo", "Unicorn Pseudo", JOptionPane.QUESTION_MESSAGE);
-        client.sendMessage(new Message("Connexion",  new Player(InetAddress.getLocalHost().getHostAddress(), pseudo, 0, false)));
+        Player player = new Player (InetAddress.getLocalHost().getHostAddress(), pseudo, 0, false);
+        client.setPlayer(player);
+        client.sendMessage(new Message("Connexion", player ));
 
             try {
                 //create the font to use. Specify the size!
