@@ -59,4 +59,9 @@ public class ServerCentral extends Thread implements ActionServer{
             t.sendMessage(message);
         }
     }
+
+    @Override
+    public void deconnexion(ThreadServer threadServer) {
+        threadServers.remove(threadServer);
+    }
 }

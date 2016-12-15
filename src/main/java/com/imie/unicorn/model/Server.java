@@ -20,6 +20,8 @@ public class Server {
     private Charset charset =  Charset.forName("UTF-8");
 
     private ServerSocketChannel server;
+    private ObjectInputStream oos;
+    private ObjectOutputStream ois;
 
     public void init() throws Exception {
         Thread discovery = new Discovery();
