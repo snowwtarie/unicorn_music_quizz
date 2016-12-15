@@ -88,10 +88,17 @@ public class Server {
             System.out.println("LISTPLAYER");
         } else if (message.getKey().equals("PlayerReady")) {
             Message msg = message;
+            Player player = (Player) message.getValue();
+
             System.out.println(message.getValue().toString());
-            UnicornCore.getUnicornCore().getPlayerList().get((Player) message.getValue()).setIsReady(true);
+            UnicornCore.getUnicornCore().getPlayerList().get(player.getIdPlayer()).setIsReady(true);
             send(new Message("PlayerReady", UnicornCore.getUnicornCore().getPlayerList()), sc);
             System.out.println("Ready");
+            System.out.println("Server : checking if all players ready...");
+            if (UnicornCore.getUnicornCore().checkIfAllReady()){
+                System.out.println("PLAYER ARE ALL READY");
+                send(new Message("GameStart", UnicornCore.getUnicornCore().getCurrentUrlTrack()), sc);
+            }
         }
     }
 

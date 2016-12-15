@@ -73,7 +73,7 @@ public class UnicornCore {
     public boolean checkIfAllReady(){
         if (playerList.size() > 1) {
             for(Map.Entry<String, Player> p : this.playerList.entrySet()) {
-                if (p.getValue().getIsReady())
+                if (!p.getValue().getIsReady())
                     return false;
             }
             return true;

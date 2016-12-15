@@ -115,10 +115,12 @@ public class JFenetre extends JFrame {
         getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack();
     }
 
-    public void switchtoGame(){
+    public void switchtoGame() throws IOException {
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
         getPanelBorder().getPanelCardMain().getPanelMainPlay().startThread();
         getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "score");
+        getPanelBorder().getPanelCardMain().getPanelMainPlay().initPanelMainPlay();
+        getPanelBorder().getPanelCardSide().getPanelSideScore().initPanelSideScore();
     }
 
     public void trackFinish(){

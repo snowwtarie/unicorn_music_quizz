@@ -62,6 +62,8 @@ public class Client {
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
         } else if (message.getKey().equals("PlayerReady")) {
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
+        } else if (message.getKey().equals("GameStart")) {
+            JFenetre.getInstance().switchtoGame();
         }
     }
 
