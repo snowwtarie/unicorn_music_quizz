@@ -19,4 +19,6 @@ public interface ActionServer {
         public void sendToAll(Message message) throws IOException;
 
         void deconnexion(ThreadServer threadServer);
+
+    public void sendToAllWithReset(Message message) throws IOException;
 }

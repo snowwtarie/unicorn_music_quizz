@@ -44,7 +44,7 @@ public class ThreadServer extends  Thread {
             this.sendMessage(new Message("Connexion", null));
         } else if (message.getKey().equals("List_Players")) {
             System.out.println(actionServer.getListPlayers().size());
-            actionServer.sendToAll(new Message("refreshListPlayer", actionServer.getListPlayers()));
+            actionServer.sendToAllWithReset(new Message("refreshListPlayer", actionServer.getListPlayers()));
             System.out.println("Thread >>> LISTPLAYER");
 
         } else if (message.getKey().equals("PlayerReady")) {

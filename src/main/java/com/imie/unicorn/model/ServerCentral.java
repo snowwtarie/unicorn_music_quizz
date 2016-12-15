@@ -61,6 +61,13 @@ public class ServerCentral extends Thread implements ActionServer{
     }
 
     @Override
+    public void sendToAllWithReset(Message message) throws IOException {
+        for(ThreadServer t : threadServers){
+            t.sendMessageWithReset(message);
+        }
+    }
+
+    @Override
     public void deconnexion(ThreadServer threadServer) {
         threadServers.remove(threadServer);
     }
