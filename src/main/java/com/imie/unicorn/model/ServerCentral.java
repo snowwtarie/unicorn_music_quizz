@@ -3,6 +3,7 @@ package com.imie.unicorn.model;
 
 import com.imie.unicorn.controller.Player;
 import com.imie.unicorn.controller.UnicornCore;
+import com.imie.unicorn.view.Message;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -50,5 +51,12 @@ public class ServerCentral extends Thread implements ActionServer{
     @Override
     public HashMap<String, Player> getListPlayers() {
         return core.getPlayerList();
+    }
+
+    @Override
+    public void sendToAll(Message message) throws IOException {
+        for(ThreadServer t : threadServers){
+            t.sendMessage(message);
+        }
     }
 }

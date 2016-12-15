@@ -1,7 +1,9 @@
 package com.imie.unicorn.model;
 
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.view.Message;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,5 +15,7 @@ public interface ActionServer {
         public void addPlayer(Player player);
 
         public HashMap<String, Player> getListPlayers();
+
+        public void sendToAll(Message message) throws IOException;
 
 }

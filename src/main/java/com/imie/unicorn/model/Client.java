@@ -21,6 +21,7 @@ public class Client {
 
     public Client() throws IOException {
         Socket socketClient = new Socket("10.4.1.14", 5000);
+        //Socket socketClient = new Socket("127.0.0.1", 5000);
 
         out = new ObjectOutputStream(socketClient.getOutputStream());
         out.flush();
