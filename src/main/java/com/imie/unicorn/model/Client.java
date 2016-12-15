@@ -40,6 +40,7 @@ public class Client {
         if (message.getKey().equals("Connexion")) {
             sendMessage(new Message("List_Players", null));
         } else if (message.getKey().equals("refreshListPlayer")) {
+            System.out.println(((HashMap<String, Player>) message.getValue()).size());
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
             System.out.println("Client >> Player List");
         } else if (message.getKey().equals("PlayerReady")) {

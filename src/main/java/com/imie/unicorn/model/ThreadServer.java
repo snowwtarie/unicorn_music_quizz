@@ -26,10 +26,10 @@ public class ThreadServer extends  Thread {
     public void run() {
         while (true) {
             try {
-                if (in.read() == -1) {
+                /*if (in.read() == -1) {
                     actionServer.deconnexion(this);
                     break;
-                }
+                }*/
                 Message message = (Message) in.readObject();
                 traiterMessage(message);
             } catch (IOException | ClassNotFoundException e) {
@@ -43,6 +43,7 @@ public class ThreadServer extends  Thread {
             actionServer.addPlayer((Player) message.getValue());
             this.sendMessage(new Message("Connexion", null));
         } else if (message.getKey().equals("List_Players")) {
+            System.out.println(actionServer.getListPlayers().size());
             actionServer.sendToAll(new Message("refreshListPlayer", actionServer.getListPlayers()));
             System.out.println("Thread >>> LISTPLAYER");
 
@@ -59,9 +60,15 @@ public class ThreadServer extends  Thread {
         }
     }
 
+
     public void sendMessage(Message message) throws IOException {
         out.writeObject(message);
         out.flush();
+    }
+
+    public void sendMessageWithReset(Message message) throws IOException {
+        out.reset();
+        sendMessage(message);
     }
 
     public static void main(String[] args) throws Exception {
