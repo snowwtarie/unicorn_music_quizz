@@ -1,6 +1,8 @@
 package com.imie.unicorn.controller;
 
-public class Track {
+import java.io.Serializable;
+
+public class Track implements Serializable{
     private int id;
     private String preview;
     private String title;

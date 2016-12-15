@@ -16,12 +16,14 @@ import java.nio.charset.Charset;
 
 public class Server {
 
-    private Selector selector;
+   /* private Selector selector;
     private Charset charset =  Charset.forName("UTF-8");
-    private UnicornCore core;
+
     private ServerSocketChannel server;
 
     public void init() throws Exception {
+        Thread discovery = new Discovery();
+        discovery.start();
         this.core = UnicornCore.getUnicornCore();
 
         selector = Selector.open();
@@ -79,27 +81,7 @@ public class Server {
     }
 
     private void traiterMessage(Message message, SocketChannel sc) throws IOException {
-        if (message.getKey().equals("Connexion")) {
-            UnicornCore.getUnicornCore().addPlayer((Player) message.getValue());
-            System.out.println("CONNNEXION");
-            send(new Message("Connexion", null), sc);
-        } else if (message.getKey().equals("List_Players")) {
-            send(new Message("List_Players", UnicornCore.getUnicornCore().getPlayerList()), sc);
-            System.out.println("LISTPLAYER");
-        } else if (message.getKey().equals("PlayerReady")) {
-            Message msg = message;
-            Player player = (Player) message.getValue();
 
-            System.out.println(message.getValue().toString());
-            UnicornCore.getUnicornCore().getPlayerList().get(player.getIdPlayer()).setIsReady(true);
-            send(new Message("PlayerReady", UnicornCore.getUnicornCore().getPlayerList()), sc);
-            System.out.println("Ready");
-            System.out.println("Server : checking if all players ready...");
-            if (UnicornCore.getUnicornCore().checkIfAllReady()){
-                System.out.println("PLAYER ARE ALL READY");
-                send(new Message("GameStart", UnicornCore.getUnicornCore().getCurrentUrlTrack()), sc);
-            }
-        }
     }
 
     public Message read(SocketChannel socketChannel, ByteBuffer buffer) throws IOException, ClassNotFoundException {
@@ -121,5 +103,5 @@ public class Server {
 
     public static void main(String[] args) throws Exception {
         new Server().init();
-    }
+    }*/
 }

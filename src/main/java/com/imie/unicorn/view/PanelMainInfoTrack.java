@@ -26,7 +26,7 @@ public class PanelMainInfoTrack extends JPanel {
     }
 
     public void initPanelMainInfoTrack() throws IOException {
-        Track lastTrack = JFenetre.getInstance().getClient().getCurrentTrack();
+/*        Track lastTrack = JFenetre.getInstance().getClient().getCurrentTrack();
 
         URL url = null;
         try {
@@ -69,7 +69,7 @@ public class PanelMainInfoTrack extends JPanel {
         infos.setFont(JFenetre.unicornFont.deriveFont(20f));
         this.add(message, BorderLayout.NORTH);
         this.add(trackInfos, BorderLayout.CENTER);
-        this.add(infos , BorderLayout.SOUTH);
+        this.add(infos , BorderLayout.SOUTH);*/
     }
 
     public void newInfoTrack() throws IOException {

@@ -1,6 +1,7 @@
 package com.imie.unicorn.view;
 
 import com.imie.unicorn.controller.Player;
+import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.model.Client;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 
 /**
@@ -39,7 +41,7 @@ public class JFenetre extends JFrame {
 
         JOptionPane jOptionPane = new JOptionPane();
         String pseudo = jOptionPane.showInputDialog(null, "Veuillez saisir votre pseudo", "Unicorn Pseudo", JOptionPane.QUESTION_MESSAGE);
-        client.getConnection(pseudo);
+        client.sendMessage(new Message("Connexion",  new Player(InetAddress.getLocalHost().getHostAddress(), pseudo, 0, false)));
 
             try {
                 //create the font to use. Specify the size!
@@ -107,20 +109,20 @@ public class JFenetre extends JFrame {
         PanelBorder.getPanelCardSide().getPanelSideScore().refreshScore();
     }
 
-    public void newRoundSong() throws IOException {
-        getPanelBorder().getPanelCardMain().getPanelMainPlay().refreshPanelMainPlay();
-    }
+//    public void newRoundSong() throws IOException {
+//        getPanelBorder().getPanelCardMain().getPanelMainPlay().refreshPanelMainPlay();
+//    }
 
     public void newInfoSong() throws IOException {
         getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack();
     }
 
-    public void switchtoGame() throws IOException {
+    public void switchtoGame(Track currentTrack) throws IOException {
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
-        getPanelBorder().getPanelCardMain().getPanelMainPlay().startThread();
         getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "score");
-        getPanelBorder().getPanelCardMain().getPanelMainPlay().initPanelMainPlay();
+        getPanelBorder().getPanelCardMain().getPanelMainPlay().initPanelMainPlay(currentTrack);
         getPanelBorder().getPanelCardSide().getPanelSideScore().initPanelSideScore();
+        getPanelBorder().getPanelCardMain().getPanelMainPlay().startThread();
     }
 
     public void trackFinish(){

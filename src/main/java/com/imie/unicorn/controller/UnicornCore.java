@@ -65,9 +65,9 @@ public class UnicornCore {
     }
 
     private void getAllTrack(int idPlaylist) throws IOException {
-        //System.out.println("UnicornCore : getting track list by deezer API...");
-        //DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
-        //this.listTrack = deezerAPI.getListTrack();
+        System.out.println("UnicornCore : getting track list by deezer API...");
+        DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
+        this.listTrack = deezerAPI.getListTrack();
     }
 
     public boolean checkIfAllReady(){
@@ -135,6 +135,9 @@ public class UnicornCore {
 
     public String getCurrentUrlTrack(){
         return currentTrack.getPreview();
+    }
+    public Track getCurrentTrack(){
+        return currentTrack;
     }
 
     public HashMap<String, Player> getPlayerList() {

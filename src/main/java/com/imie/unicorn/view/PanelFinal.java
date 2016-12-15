@@ -18,12 +18,12 @@ public class PanelFinal extends JPanel implements ActionListener {
 
 
     public PanelFinal() throws IOException {
-        initPanelFinal();
+        //initPanelFinal();
     }
 
     private void initPanelFinal() throws IOException {
-        Player gameWinner = JFenetre.getInstance().getClient().getGameWinner();
-        message.setText(gameWinner.getPseudo()+" est le vainqueur, Felicitations !");
+        JFenetre.getInstance().getClient().sendMessage(new Message("GameEnd", null));
+        //message.setText(gameWinner.getPseudo()+" est le vainqueur, Felicitations !");
 
         this.setLayout(new BorderLayout());
         this.setBackground(Color.WHITE);

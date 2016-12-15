@@ -6,7 +6,7 @@ import java.net.*;
 /**
  * Created by Yornletard on 13/12/2016.
  */
-public class Discovery implements Runnable {
+public class Discovery extends Thread {
 
     DatagramSocket socket;
 

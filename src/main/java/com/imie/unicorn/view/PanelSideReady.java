@@ -87,12 +87,12 @@ public class PanelSideReady extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (readyBox.isSelected()){
+        /*if (readyBox.isSelected()){
             try {
                 JFenetre.getInstance().getClient().playerReady();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-        }
+        }*/
     }
 }

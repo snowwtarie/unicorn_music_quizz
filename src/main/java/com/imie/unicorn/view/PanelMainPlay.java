@@ -30,8 +30,8 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     public PanelMainPlay(){
     }
 
-    public void initPanelMainPlay() throws IOException {
-        Track currentTrack = JFenetre.getInstance().getClient().getCurrentTrack();
+    public void initPanelMainPlay(Track currentTrack) throws IOException {
+        //Track currentTrack = JFenetre.getInstance().getClient().getCurrentTrack();
         int numberSong = currentTrack.getId();
         label.setText("Chanson "+numberSong+"/25");
         label.setFont(JFenetre.robotoFont.deriveFont(25f));
@@ -95,9 +95,9 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         this.setVisible(true);
     }
 
-    public void refreshPanelMainPlay() throws IOException {
+    public void refreshPanelMainPlay(Track currentTrack) throws IOException {
         this.removeAll();
-        initPanelMainPlay();
+        initPanelMainPlay(currentTrack);
         this.repaint();
         this.revalidate();
     }
@@ -138,11 +138,9 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     @Override
     public void actionPerformed(ActionEvent e) {
         Boolean trackFound = null;
-        try {
-            trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+
+            //trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
+
         if(!trackFound){
             jProposition.setText("");
             wrongProp.setText("Faux, Essaie Encore !");
@@ -163,11 +161,9 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER){
             Boolean trackFound = null;
-            try {
-                trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+
+                //trackFound = JFenetre.getInstance().getClient().checkProposition(jProposition.getText());
+
             if(!trackFound){
                 jProposition.setText("");
                 wrongProp.setText("Faux, Essaie Encore !");
