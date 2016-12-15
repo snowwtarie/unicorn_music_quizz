@@ -20,7 +20,7 @@ public class Client {
     private Player player;
 
     public Client() throws IOException {
-        Socket socketClient = new Socket("localhost", 5000);
+        Socket socketClient = new Socket("10.4.1.14", 5000);
 
         out = new ObjectOutputStream(socketClient.getOutputStream());
         out.flush();
@@ -42,6 +42,7 @@ public class Client {
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
             System.out.println("Client >> Player List");
         } else if (message.getKey().equals("PlayerReady")) {
+            System.out.println("Client >> Player Ready");
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
         } else if (message.getKey().equals("GameStart")) {
             JFenetre.getInstance().switchtoGame((Track) message.getValue());

@@ -82,7 +82,7 @@ public class PanelSideReady extends JPanel implements ActionListener {
         this.repaint();
         this.revalidate();
 
-        System.out.println("REFRESH PLAYERS");
+        System.out.println("Interface >>> REFRESH PLAYERS");
     }
 
     @Override
