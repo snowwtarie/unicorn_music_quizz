@@ -9,6 +9,7 @@ import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -18,7 +19,7 @@ import java.util.HashMap;
  * Created by Stibo on 30/11/2016.
  * Fenetre Principale
  */
-public class JFenetre extends JFrame {
+public class JFenetre extends JFrame implements WindowListener {
     private static JFenetre jFenetre;
     public static Font robotoFont;
     public static Font unicornFont;
@@ -37,6 +38,8 @@ public class JFenetre extends JFrame {
         this.setLocationRelativeTo ( null ) ;
         this.setResizable(false);
         this.setVisible(true);
+
+        addWindowListener(this);
     }
 
     public void init() throws IOException {
@@ -115,21 +118,22 @@ public class JFenetre extends JFrame {
 //        getPanelBorder().getPanelCardMain().getPanelMainPlay().refreshPanelMainPlay();
 //    }
 
-    public void newInfoSong() throws IOException {
-        getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack();
+    public void newInfoSong(Track currentTrack) throws IOException {
+        getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack(currentTrack);
     }
 
     public void switchtoGame(Track currentTrack) throws IOException {
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
         getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "score");
-        getPanelBorder().getPanelCardMain().getPanelMainPlay().initPanelMainPlay(currentTrack);
-        getPanelBorder().getPanelCardSide().getPanelSideScore().initPanelSideScore();
+        getPanelBorder().getPanelCardMain().getPanelMainPlay().refreshPanelMainPlay(currentTrack);
+        getPanelBorder().getPanelCardSide().getPanelSideScore().refreshScore();
         getPanelBorder().getPanelCardMain().getPanelMainPlay().startThread();
     }
 
-    public void trackFinish(){
+    public void trackFinish(Track currentTrack) throws IOException {
         getPanelBorder().getPanelCardMain().getPanelMainPlay().stopThread();
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
+        getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack(currentTrack);
     }
 
     public void gameFinish() throws IOException {
@@ -143,4 +147,42 @@ public class JFenetre extends JFrame {
     }
 
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        try {
+            this.getClient().sendMessage(new Message("Deconnexion", null));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

@@ -76,7 +76,19 @@ public class ServerCentral extends Thread implements ActionServer{
     }
 
     @Override
-    public void deconnexion(ThreadServer threadServer) {
+    public void removePlayer(ThreadServer threadServer) throws IOException {
+        System.out.println("remove player");
+        core.removePlayer(threadServer.getPlayer());
         threadServers.remove(threadServer);
+        sendToAllWithReset(new Message("refreshListPlayer", core.getPlayerList()));
+    }
+
+    @Override
+    public Track waitForNextSong() throws InterruptedException {
+        core.startWait();
+        while(!core.isReady()){
+
+        }
+        return core.getCurrentTrack();
     }
 }

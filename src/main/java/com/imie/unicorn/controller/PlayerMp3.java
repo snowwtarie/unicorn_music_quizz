@@ -12,16 +12,19 @@ public class PlayerMp3 extends Thread{
 
     MP3Player player;
     Track currentTrack;
+    private boolean run;
 
     @Override
     public void run(){
+        run = true;
         try {
             play();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         while (true) {
-
+            if (!run)
+                break;
         }
     }
 
@@ -61,5 +64,10 @@ public class PlayerMp3 extends Thread{
 
     public void setCurrentTrack(Track currentTrack) {
         this.currentTrack = currentTrack;
+    }
+
+    public void kill() {
+        player.stop();
+        this.run = false;
     }
 }

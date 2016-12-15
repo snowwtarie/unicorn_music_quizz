@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DeezerAPI {
     private long idPlaylist;
 
-    public DeezerAPI(int p_idPlaylist){
+    public DeezerAPI(long p_idPlaylist){
         //récupération de l'id de la playlist
         this.idPlaylist = p_idPlaylist;
     }
@@ -34,6 +34,9 @@ public class DeezerAPI {
     private String callApi(String URI) throws IOException {
         // Ouverture connexion
         DefaultHttpClient httpClient = new DefaultHttpClient();
+
+
+
         HttpGet getRequest = new HttpGet("http://api.deezer.com/" + URI);
         getRequest.addHeader("accept", "application/json");
         HttpResponse httpResponse = httpClient.execute(getRequest);

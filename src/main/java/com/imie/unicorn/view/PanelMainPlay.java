@@ -21,7 +21,8 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     private JPanel propositionPan = new JPanel();
     private JLabel label = new JLabel("", SwingConstants.CENTER);
     private JLabel wrongProp = new JLabel("", SwingConstants.CENTER);
-    private Thread progressThread = new Thread(new Traitement());
+    private Thread progressThread;
+    private Track currentTrack;
 
     public static JTextField getProposition() {
         return jProposition;
@@ -32,6 +33,8 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
     public void initPanelMainPlay(Track currentTrack) throws IOException {
         //Track currentTrack = JFenetre.getInstance().getClient().getCurrentTrack();
+        this.currentTrack = currentTrack;
+        this.progressThread = new Thread(new Traitement());
         int numberSong = currentTrack.getId();
         label.setText("Chanson "+numberSong+"/25");
         label.setFont(JFenetre.robotoFont.deriveFont(25f));
@@ -112,12 +115,15 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
     class Traitement implements Runnable{
         public void run(){
-            for ( int val = 0; val <= 3000; val++){
+            for ( int val = 0; val <= 500; val++){
                 bar.setValue( val ) ;
                 try {Thread.sleep(10);} catch ( InterruptedException e) {}
             }
             try {
-                JFenetre.getInstance().trackFinish();
+                JFenetre.getInstance().trackFinish(currentTrack);
+                JFenetre.getInstance().getClient().getPlayerMp3().kill();
+                JFenetre.getInstance().getClient().sendMessage(new Message("noWinner", null));
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

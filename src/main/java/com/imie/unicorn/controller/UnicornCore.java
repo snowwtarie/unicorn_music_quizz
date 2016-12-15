@@ -15,7 +15,7 @@ public class UnicornCore {
     private HashMap<String, Player> playerList;
     private ArrayList<Track> listTrack;
     private Track currentTrack;
-    private static final int idPlaylist = 908622995;
+    private static final long idPlaylist = 2511342804l;
     public boolean isCoreReady;
     private GameTimer trackTimer;
     private Score score;
@@ -35,21 +35,23 @@ public class UnicornCore {
         return unicornCore;
     }
 
-    public void startWait(){
+    public void startWait() throws InterruptedException {
         isCoreReady = false;
         GameTimer smallTimer = new GameTimer(5000);
         smallTimer.start();
-    }
-
-    public void startTrack() throws IOException, InterruptedException {
-
+        smallTimer.join();
         this.nextTrack();
-
-        isCoreReady = true;
-        trackTimer = new GameTimer(30000);
-        trackTimer.start();
-        trackTimer.join();
     }
+
+//    public void startTrack() throws IOException, InterruptedException {
+//
+//        this.nextTrack();
+//
+//        isCoreReady = true;
+//        trackTimer = new GameTimer(30000);
+//        trackTimer.start();
+//        trackTimer.join();
+//    }
 
     public boolean isReady() {
         return isCoreReady;
@@ -64,7 +66,7 @@ public class UnicornCore {
         currentTrack = listTrack.get(((index > listTrack.size()) ? index : -1) + 1);
     }
 
-    private void getAllTrack(int idPlaylist) throws IOException {
+    private void getAllTrack(long idPlaylist) throws IOException {
         System.out.println("UnicornCore : getting track list by deezer API...");
         DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
         this.listTrack = deezerAPI.getListTrack();
@@ -149,7 +151,7 @@ public class UnicornCore {
         this.playerList.put(player.getIdPlayer(), player);
     }
     public void removePlayer(Player player){
-        this.playerList.remove(player);
+        this.playerList.remove(player.getIdPlayer());
     }
 
     public void closeGame(){

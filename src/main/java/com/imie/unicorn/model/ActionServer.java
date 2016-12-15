@@ -5,7 +5,6 @@ import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.view.Message;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -19,9 +18,12 @@ public interface ActionServer {
 
         void sendToAll(Message message) throws IOException;
 
-        void deconnexion(ThreadServer threadServer);
 
         void sendToAllWithReset(Message message) throws IOException;
 
         Track getCurrentTrack();
+
+        void removePlayer(ThreadServer ts) throws IOException;
+
+        Track waitForNextSong() throws InterruptedException;
 }

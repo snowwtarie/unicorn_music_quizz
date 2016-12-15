@@ -25,9 +25,9 @@ public class PanelMainInfoTrack extends JPanel {
 
     }
 
-    public void initPanelMainInfoTrack() throws IOException {
-/*        Track lastTrack = JFenetre.getInstance().getClient().getCurrentTrack();
+    public void initPanelMainInfoTrack(Track track) throws IOException {
 
+        Track lastTrack = track;
         URL url = null;
         try {
             url = new URL(lastTrack.getAlbumPicture());
@@ -49,16 +49,16 @@ public class PanelMainInfoTrack extends JPanel {
         trackInfos.setLayout(new BorderLayout());
         trackInfos.add(trackTitle, BorderLayout.NORTH);
         trackInfos.add(trackVisuel, BorderLayout.CENTER);
-        trackInfos.setPreferredSize(new DimensionUIResource(500,500));
+        trackInfos.setPreferredSize(new DimensionUIResource(400,400));
         trackInfos.setBackground(Color.WHITE);
         trackInfos.setVisible(true);
 
-        Player winner = JFenetre.getInstance().getClient().getRoundWinner();
-        if(winner == null){
+        //Player winner = JFenetre.getInstance().getClient().getRoundWinner();
+       // if(winner == null){
             message.setText("Personne n'a gagne !");
-        } else {
-            message.setText(winner.getPseudo()+" a trouver la bonne reponse !");
-        }
+        //} else {
+            //message.setText(winner.getPseudo()+" a trouver la bonne reponse !");
+        //}
 
         this.setLayout(new BorderLayout());
         this.setBackground(Color.WHITE);
@@ -69,12 +69,12 @@ public class PanelMainInfoTrack extends JPanel {
         infos.setFont(JFenetre.unicornFont.deriveFont(20f));
         this.add(message, BorderLayout.NORTH);
         this.add(trackInfos, BorderLayout.CENTER);
-        this.add(infos , BorderLayout.SOUTH);*/
+        this.add(infos , BorderLayout.SOUTH);
     }
 
-    public void newInfoTrack() throws IOException {
+    public void newInfoTrack(Track currentTrack) throws IOException {
         this.removeAll();
-        initPanelMainInfoTrack();
+        initPanelMainInfoTrack(currentTrack);
         this.repaint();
         this.revalidate();
     }

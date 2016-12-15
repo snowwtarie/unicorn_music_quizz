@@ -16,6 +16,7 @@ public class ThreadServer extends  Thread {
     private ActionServer actionServer;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private Player player;
 
     public ThreadServer(ActionServer actionServer, Socket socketClient) throws IOException {
         this.actionServer = actionServer;
@@ -27,12 +28,12 @@ public class ThreadServer extends  Thread {
     public void run() {
         while (true) {
             try {
-                /*if (in.read() == -1) {
-                    actionServer.deconnexion(this);
-                    break;
-                }*/
                 Message message = (Message) in.readObject();
                 traiterMessage(message);
+
+                if (message.getKey().equals("Deconnexion")){
+                    break;
+                }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -41,6 +42,7 @@ public class ThreadServer extends  Thread {
 
     public void traiterMessage(Message message) throws IOException {
         if (message.getKey().equals("Connexion")) {
+            this.player = (Player) message.getValue();
             actionServer.addPlayer((Player) message.getValue());
             this.sendMessage(new Message("Connexion", null));
         } else if (message.getKey().equals("List_Players")) {
@@ -59,6 +61,17 @@ public class ThreadServer extends  Thread {
                 Track track = actionServer.getCurrentTrack();
                 sendMessageWithReset(new Message("GameStart", track));
             }
+        } else if (message.getKey().equals("noWinner")) {
+            try {
+               sendMessage(new Message("GameStart", actionServer.waitForNextSong()));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (message.getKey().equals("Deconnexion")){
+            sendMessage(new Message("Deconnexion", null));
+            out.close();
+            in.close();
+            actionServer.removePlayer(this);
         }
     }
 
@@ -72,6 +85,15 @@ public class ThreadServer extends  Thread {
         out.reset();
         sendMessage(message);
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
 
     public static void main(String[] args) throws Exception {
 

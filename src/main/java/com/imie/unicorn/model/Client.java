@@ -19,10 +19,20 @@ public class Client {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Player player;
+
+    public PlayerMp3 getPlayerMp3() {
+        return playerMp3;
+    }
+
+    public void setPlayerMp3(PlayerMp3 playerMp3) {
+        this.playerMp3 = playerMp3;
+    }
+
     private PlayerMp3 playerMp3;
+    private Track currentTrack;
 
     public Client() throws IOException {
-        Socket socketClient = new Socket("10.4.1.14", 5000);
+        Socket socketClient = new Socket("192.168.43.43", 5000);
         //Socket socketClient = new Socket("127.0.0.1", 5000);
 
         out = new ObjectOutputStream(socketClient.getOutputStream());
@@ -35,6 +45,9 @@ public class Client {
         while (true) {
             Message message = (Message) in.readObject();
             traiterMessage(message);
+            if (message.getKey().equals("Deconnexion")){
+                break;
+            }
         }
     }
 
@@ -51,9 +64,13 @@ public class Client {
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
         } else if (message.getKey().equals("GameStart")) {
             JFenetre.getInstance().switchtoGame((Track) message.getValue());
+            this.currentTrack = (Track) message.getValue();
             playerMp3 = new PlayerMp3((Track) message.getValue());
             playerMp3.start();
             System.out.println("MP3");
+        } else if (message.getKey().equals("Deconnexion")){
+            out.close();
+            in.close();
         }
     }
 
@@ -76,5 +93,13 @@ public class Client {
 
     public void setPlayer(Player p) {
        this.player = p;
+    }
+
+    public Track getCurrentTrack() {
+        return currentTrack;
+    }
+
+    public void setCurrentTrack(Track currentTrack) {
+        this.currentTrack = currentTrack;
     }
 }

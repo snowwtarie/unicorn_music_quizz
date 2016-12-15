@@ -62,14 +62,4 @@ public class Player implements Serializable {
         isReady = ready;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + idPlayer +
-                ", ip='" + ip + '\'' +
-                ", pseudo='" + pseudo + '\'' +
-                ", score='" + score + '\'' +
-                ", isReady='" + isReady + '\'' +
-                '}';
-    }
 }
