@@ -39,7 +39,7 @@ public class Client {
     public void traiterMessage(Message message) throws IOException {
         if (message.getKey().equals("Connexion")) {
             sendMessage(new Message("List_Players", null));
-        } else if (message.getKey().equals("List_Players")) {
+        } else if (message.getKey().equals("refreshListPlayer")) {
             JFenetre.getInstance().refreshReadyPlayers((HashMap<String, Player>) message.getValue());
             System.out.println("Client >> Player List");
         } else if (message.getKey().equals("PlayerReady")) {

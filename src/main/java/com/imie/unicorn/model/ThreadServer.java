@@ -8,7 +8,6 @@ import com.imie.unicorn.view.Message;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class ThreadServer extends  Thread {
@@ -46,8 +45,6 @@ public class ThreadServer extends  Thread {
         } else if (message.getKey().equals("List_Players")) {
             actionServer.sendToAll(new Message("refreshListPlayer", actionServer.getListPlayers()));
             System.out.println("Thread >>> LISTPLAYER");
-        }else if (message.getKey().equals("refreshListPlayer")){
-            sendMessage(new Message("List_Player", message.getValue()));
 
         } else if (message.getKey().equals("PlayerReady")) {
             Player player = (Player) message.getValue();
