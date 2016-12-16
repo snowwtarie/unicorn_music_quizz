@@ -20,6 +20,7 @@ public class UnicornCore {
     public boolean isCoreReady;
     private GameTimer trackTimer;
     private Score score;
+    private int nexttrack;
 
     private UnicornCore() throws IOException {
         System.out.println("UnicornCore : UnicornCore starting...");
@@ -55,8 +56,14 @@ public class UnicornCore {
     }
 
     public void nextTrack() {
-        int index = listTrack.indexOf(currentTrack);
-        currentTrack = listTrack.get(((index < listTrack.size()) ? index : -1) + 1);
+
+        if (nexttrack == playerList.size()) {
+            nexttrack = 0;
+            int index = listTrack.indexOf(currentTrack);
+            currentTrack = listTrack.get(((index < listTrack.size()) ? index : -1) + 1);
+        } else {
+            nexttrack++;
+        }
     }
 
     private void getAllTrack(long idPlaylist) throws IOException {

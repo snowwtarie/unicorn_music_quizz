@@ -91,7 +91,7 @@ public class ServerCentral extends Thread implements ActionServer{
     }
 
     @Override
-    public void waitForNextSong() throws InterruptedException, IOException {
+    public  void waitForNextSong() throws InterruptedException, IOException {
         new GameTimer(5000, this).start();
     }
 
