@@ -16,14 +16,51 @@ import java.net.URL;
  * Created by Stibo on 1/12/2016.
  */
 public class PanelMainInfoTrack extends JPanel {
-    private JLabel message = new JLabel("", SwingConstants.CENTER);
-    private JPanel trackInfos = new JPanel();
-    private JLabel trackTitle = new JLabel("", SwingConstants.CENTER);
-    private JLabel infos = new JLabel("Preparez vous, une nouvelle chanson va demarrer !", SwingConstants.CENTER);
+    public JLabel getMessage() {
+        return message;
+    }
+
+    public void setMessage(JLabel message) {
+        this.message = message;
+    }
+
+    private JLabel message;
+    private JPanel trackInfos;
+    private JLabel trackTitle;
+    private JLabel infos;
+    private ImageIcon visuel;
+    private JLabel trackVisuel;
 
     public PanelMainInfoTrack(){
+        this.message = new JLabel("Personne n'a trouver !", SwingConstants.CENTER);
+        this.trackInfos = new JPanel();
+        this.trackTitle  = new JLabel("DFGHJKL:LKJHGFDDFGHJKL:", SwingConstants.CENTER);
+        this.infos  = new JLabel("Preparez vous, une nouvelle chanson va demarrer !", SwingConstants.CENTER);
 
+        visuel = new ImageIcon();
+        trackVisuel = new JLabel(visuel);
+
+        trackTitle.setPreferredSize(new DimensionUIResource(500,100));
+        trackTitle.setFont(JFenetre.robotoFont);
+        trackTitle.setBackground(Color.BLUE);
+        trackInfos.setLayout(new BorderLayout());
+        trackInfos.add(trackTitle, BorderLayout.NORTH);
+        trackInfos.add(trackVisuel, BorderLayout.CENTER);
+        trackInfos.setBackground(Color.WHITE);
+        trackInfos.setVisible(true);
+
+        this.setLayout(new BorderLayout());
+        this.setBackground(Color.WHITE);
+        this.setPreferredSize(new DimensionUIResource(800, 800));
+        message.setPreferredSize(new DimensionUIResource(800, 100));
+        message.setFont(JFenetre.unicornFont);
+        infos.setPreferredSize(new DimensionUIResource(800, 100));
+        infos.setFont(JFenetre.unicornFont.deriveFont(20f));
+        this.add(message, BorderLayout.NORTH);
+        this.add(trackInfos, BorderLayout.CENTER);
+        this.add(infos , BorderLayout.SOUTH);
     }
+
 
     public void initPanelMainInfoTrack(Track track) throws IOException {
 
@@ -41,41 +78,15 @@ public class PanelMainInfoTrack extends JPanel {
             e.printStackTrace();
         }
 
-        ImageIcon visuel = new ImageIcon(img);
-        JLabel trackVisuel = new JLabel(visuel);
-        trackTitle.setPreferredSize(new DimensionUIResource(500,100));
-        trackTitle.setFont(JFenetre.robotoFont);
+        visuel.setImage(img);
         trackTitle.setText("<html>La Reponse etait : "+lastTrack.getTitle()+" - "+lastTrack.getArtist()+"</html>");
-        trackInfos.setLayout(new BorderLayout());
-        trackInfos.add(trackTitle, BorderLayout.NORTH);
-        trackInfos.add(trackVisuel, BorderLayout.CENTER);
-        trackInfos.setPreferredSize(new DimensionUIResource(400,400));
-        trackInfos.setBackground(Color.WHITE);
-        trackInfos.setVisible(true);
-
-        //Player winner = JFenetre.getInstance().getClient().getRoundWinner();
-       // if(winner == null){
-            message.setText("Personne n'a gagne !");
-        //} else {
-            //message.setText(winner.getPseudo()+" a trouver la bonne reponse !");
-        //}
-
-        this.setLayout(new BorderLayout());
-        this.setBackground(Color.WHITE);
-        this.setPreferredSize(new DimensionUIResource(800, 800));
-        message.setPreferredSize(new DimensionUIResource(800, 150));
-        message.setFont(JFenetre.unicornFont);
-        infos.setPreferredSize(new DimensionUIResource(800, 150));
-        infos.setFont(JFenetre.unicornFont.deriveFont(20f));
-        this.add(message, BorderLayout.NORTH);
-        this.add(trackInfos, BorderLayout.CENTER);
-        this.add(infos , BorderLayout.SOUTH);
     }
 
     public void newInfoTrack(Track currentTrack) throws IOException {
-        this.removeAll();
         initPanelMainInfoTrack(currentTrack);
         this.repaint();
         this.revalidate();
+        this.getParent().repaint();
+        this.getParent().revalidate();
     }
 }

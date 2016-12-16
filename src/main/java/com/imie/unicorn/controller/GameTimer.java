@@ -1,5 +1,7 @@
 package com.imie.unicorn.controller;
 
+import com.imie.unicorn.model.ServerCentral;
+
 import java.io.IOException;
 
 /**
@@ -8,9 +10,11 @@ import java.io.IOException;
 public class GameTimer extends Thread {
 
     private int time;
+    private ServerCentral serverCentral;
 
-    public GameTimer(int time){
+    public GameTimer(int time, ServerCentral serverCentral){
         this.time = time;
+        this.serverCentral = serverCentral;
     }
 
     @Override
@@ -18,8 +22,16 @@ public class GameTimer extends Thread {
         try {
             Thread.sleep(time);
             System.out.println("Timer de " + time/1000 + " secondes...");
-            UnicornCore.getUnicornCore().setIsReady(true);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            UnicornCore.getUnicornCore().nextTrack();
+            serverCentral.launchNextSong(UnicornCore.getUnicornCore().getCurrentTrack());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

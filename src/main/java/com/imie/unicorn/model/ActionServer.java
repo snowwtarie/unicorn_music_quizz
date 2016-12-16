@@ -25,5 +25,9 @@ public interface ActionServer {
 
         void removePlayer(ThreadServer ts) throws IOException;
 
-        Track waitForNextSong() throws InterruptedException;
+        void waitForNextSong() throws InterruptedException, IOException;
+
+        void launchNextSong(Track track) throws InterruptedException, IOException;
+
+        void checkProposition(String s, ThreadServer ts) throws IOException;
 }

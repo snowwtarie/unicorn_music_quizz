@@ -36,6 +36,7 @@ public class ThreadServer extends  Thread {
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
+                break;
             }
         }
     }
@@ -63,10 +64,13 @@ public class ThreadServer extends  Thread {
             }
         } else if (message.getKey().equals("noWinner")) {
             try {
-               sendMessage(new Message("GameStart", actionServer.waitForNextSong()));
+                actionServer.waitForNextSong();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        } else if (message.getKey().equals("Proposition")){
+            actionServer.checkProposition((String) message.getValue(), this);
+
         } else if (message.getKey().equals("Deconnexion")){
             sendMessage(new Message("Deconnexion", null));
             out.close();

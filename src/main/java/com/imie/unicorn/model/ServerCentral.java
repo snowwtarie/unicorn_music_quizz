@@ -1,6 +1,7 @@
 package com.imie.unicorn.model;
 
 
+import com.imie.unicorn.controller.GameTimer;
 import com.imie.unicorn.controller.Player;
 import com.imie.unicorn.controller.Track;
 import com.imie.unicorn.controller.UnicornCore;
@@ -34,7 +35,9 @@ public class ServerCentral extends Thread implements ActionServer{
                 ts.start();
 
                 threadServers.add(ts);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                break;
+            }
         }
     }
 
@@ -66,7 +69,9 @@ public class ServerCentral extends Thread implements ActionServer{
     @Override
     public void sendToAllWithReset(Message message) throws IOException {
         for(ThreadServer t : threadServers){
-            t.sendMessageWithReset(message);
+            try {
+                t.sendMessageWithReset(message);
+            } catch (Exception e){}
         }
     }
 
@@ -84,11 +89,20 @@ public class ServerCentral extends Thread implements ActionServer{
     }
 
     @Override
-    public Track waitForNextSong() throws InterruptedException {
-        core.startWait();
-        while(!core.isReady()){
+    public void waitForNextSong() throws InterruptedException, IOException {
+        new GameTimer(5000, this).start();
+    }
 
-        }
-        return core.getCurrentTrack();
+    @Override
+    public void launchNextSong(Track track) throws InterruptedException, IOException {
+        sendToAll(new Message("GameStart", track));
+    }
+
+    @Override
+    public void checkProposition(String s, ThreadServer ts) throws IOException {
+        if(core.handleProposition(s, ts.getPlayer().getIdPlayer()))
+            this.sendToAll(new Message("roundWinner", ts.getPlayer()));
+        else
+            ts.sendMessage(new Message("Perdu", null));
     }
 }

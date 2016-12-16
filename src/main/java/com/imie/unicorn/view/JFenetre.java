@@ -36,7 +36,7 @@ public class JFenetre extends JFrame implements WindowListener {
         this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         this.setSize(new DimensionUIResource(1210, 800));
         this.setLocationRelativeTo ( null ) ;
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
 
         addWindowListener(this);
@@ -132,8 +132,9 @@ public class JFenetre extends JFrame implements WindowListener {
 
     public void trackFinish(Track currentTrack) throws IOException {
         getPanelBorder().getPanelCardMain().getPanelMainPlay().stopThread();
-        getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
         getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack(currentTrack);
+        getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
+
     }
 
     public void gameFinish() throws IOException {

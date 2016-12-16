@@ -32,8 +32,8 @@ public class Client {
     private Track currentTrack;
 
     public Client() throws IOException {
-        Socket socketClient = new Socket("192.168.43.43", 5000);
-        //Socket socketClient = new Socket("127.0.0.1", 5000);
+        //Socket socketClient = new Socket("192.168.43.43", 5000);
+        Socket socketClient = new Socket("127.0.0.1", 5000);
 
         out = new ObjectOutputStream(socketClient.getOutputStream());
         out.flush();
@@ -67,7 +67,15 @@ public class Client {
             this.currentTrack = (Track) message.getValue();
             playerMp3 = new PlayerMp3((Track) message.getValue());
             playerMp3.start();
-            System.out.println("MP3");
+            System.out.println(currentTrack.getArtist()+" "+currentTrack.getTitle());
+        } else if (message.getKey().equals("Perdu")) {
+            JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainPlay().getWrongProp().setText("FAUX");
+            JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Personne n'a gagne");
+        } else if (message.getKey().equals("roundWinner")) {
+            Player winner =(Player) message.getValue();
+            JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Le Gagnant est : "+winner.getPseudo());
+            JFenetre.getInstance().trackFinish(currentTrack);
+            JFenetre.getInstance().getClient().getPlayerMp3().kill();
         } else if (message.getKey().equals("Deconnexion")){
             out.close();
             in.close();

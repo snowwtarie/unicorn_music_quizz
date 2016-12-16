@@ -1,6 +1,7 @@
 package com.imie.unicorn.controller;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.IOException;
 import java.util.*;
@@ -35,14 +36,6 @@ public class UnicornCore {
         return unicornCore;
     }
 
-    public void startWait() throws InterruptedException {
-        isCoreReady = false;
-        GameTimer smallTimer = new GameTimer(5000);
-        smallTimer.start();
-        smallTimer.join();
-        this.nextTrack();
-    }
-
 //    public void startTrack() throws IOException, InterruptedException {
 //
 //        this.nextTrack();
@@ -61,9 +54,9 @@ public class UnicornCore {
         this.isCoreReady = state;
     }
 
-    private void nextTrack() {
+    public void nextTrack() {
         int index = listTrack.indexOf(currentTrack);
-        currentTrack = listTrack.get(((index > listTrack.size()) ? index : -1) + 1);
+        currentTrack = listTrack.get(((index < listTrack.size()) ? index : -1) + 1);
     }
 
     private void getAllTrack(long idPlaylist) throws IOException {
@@ -85,20 +78,20 @@ public class UnicornCore {
     }
 
 
-    public void handleProposition(String proposition, String idPlayer){
+    public Boolean handleProposition(String proposition, String idPlayer){
         if(!checkProposition("artist", proposition)){
             if(!checkProposition("title", proposition)){
-                System.out.println("Perdu ! ");
+                System.out.println("perdu");
+                return false;
             }
         }
         else {
                 System.out.println("Gagné ! + 1 point ! t'es un gagnant Serge...");
                 int actualScore = playerList.get(idPlayer).getScore();
                 playerList.get(idPlayer).setScore(actualScore + 1);
-                this.trackTimer.interrupt();
-                this.nextTrack();
+                return true;
             }
-
+        return false;
     }
 
     private boolean checkProposition(String artisteOrTitle, String proposition){
