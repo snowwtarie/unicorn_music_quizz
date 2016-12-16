@@ -110,8 +110,8 @@ public class JFenetre extends JFrame implements WindowListener {
         PanelBorder.getPanelCardSide().getPanelSideReady().refreshPlayers(playerHashMap);
     }
 
-    public void refreshScore() throws IOException {
-        PanelBorder.getPanelCardSide().getPanelSideScore().refreshScore();
+    public void refreshScore(HashMap<String, Player> playerHashMap) throws IOException {
+        PanelBorder.getPanelCardSide().getPanelSideScore().refreshScore(playerHashMap);
     }
 
 //    public void newRoundSong() throws IOException {
@@ -125,14 +125,16 @@ public class JFenetre extends JFrame implements WindowListener {
     public void switchtoGame(Track currentTrack) throws IOException {
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "gameMain");
         getPanelBorder().getPanelCardSide().cardLayoutSide.show(PanelBorder.getPanelCardSide(), "score");
+        JFenetre.getInstance().getClient().sendMessage(new Message("refreshScore", null));
         getPanelBorder().getPanelCardMain().getPanelMainPlay().refreshPanelMainPlay(currentTrack);
-        getPanelBorder().getPanelCardSide().getPanelSideScore().refreshScore();
         getPanelBorder().getPanelCardMain().getPanelMainPlay().startThread();
+
     }
 
     public void trackFinish(Track currentTrack) throws IOException {
         getPanelBorder().getPanelCardMain().getPanelMainPlay().stopThread();
         getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack(currentTrack);
+        JFenetre.getInstance().getClient().sendMessage(new Message("refreshScore", null));
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
     }
 

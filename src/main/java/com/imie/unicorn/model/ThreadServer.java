@@ -72,6 +72,8 @@ public class ThreadServer extends  Thread {
         } else if (message.getKey().equals("Proposition")){
             actionServer.checkProposition((String) message.getValue(), this);
 
+        } else if (message.getKey().equals("refreshScore")){
+            actionServer.sendToAllWithReset(new Message("refreshScore", actionServer.getListPlayers()));
         } else if (message.getKey().equals("Deconnexion")){
             sendMessage(new Message("Deconnexion", null));
             out.close();

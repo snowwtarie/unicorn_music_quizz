@@ -95,7 +95,7 @@ public class ServerCentral extends Thread implements ActionServer{
 
     @Override
     public void launchNextSong(Track track) throws InterruptedException, IOException {
-        sendToAll(new Message("GameStart", track));
+        sendToAllWithReset(new Message("GameStart", track));
     }
 
     @Override

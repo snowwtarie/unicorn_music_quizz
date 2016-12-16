@@ -13,12 +13,12 @@ import java.util.*;
  */
 public class PanelSideScore extends JPanel{
 
-    public PanelSideScore(){
-
+    public PanelSideScore() throws IOException {
+        initPanelSideScore(new HashMap<String, Player>());
     }
 
-    public void initPanelSideScore() throws IOException {
-        HashMap<String, Player> joueurs = new HashMap<>();
+    public void initPanelSideScore(HashMap<String, Player> joueurs) throws IOException {
+
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         this.setLayout(new GridLayout(0,2));
         this.setBackground(Color.WHITE);
@@ -49,9 +49,9 @@ public class PanelSideScore extends JPanel{
         return joueur;
     }
 
-    public void refreshScore() throws IOException {
+    public void refreshScore(HashMap<String, Player> playerHashMap) throws IOException {
         this.removeAll();
-        initPanelSideScore();
+        initPanelSideScore(playerHashMap);
         this.repaint();
         this.revalidate();
     }
