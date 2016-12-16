@@ -67,15 +67,26 @@ public class UnicornCore {
     }
 
     public boolean checkIfAllReady(){
-        if (playerList.size() >= 1) {
-            for(Map.Entry<String, Player> p : this.playerList.entrySet()) {
+            /*for(Map.Entry<String, Player> p : this.playerList.entrySet()) {
+
                 if (!p.getValue().getIsReady())
                     return false;
             }
-            return true;
-        }
+            return false;*/
+            int count=0;
+            for(Map.Entry<String, Player> p : this.playerList.entrySet()) {
+                if(p.getValue().getIsReady()){
+                    count ++;
+                }
+            }
+            if(count == this.playerList.size()){
+                System.out.println("UnicornCore : players ready to play !");
+                return true;}
+        System.out.println("UnicornCore : player not all ready !");
         return false;
     }
+
+
 
 
     public Boolean handleProposition(String proposition, String idPlayer){
