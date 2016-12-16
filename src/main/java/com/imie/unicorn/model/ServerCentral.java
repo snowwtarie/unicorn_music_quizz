@@ -19,6 +19,7 @@ public class ServerCentral extends Thread implements ActionServer{
     private final ServerSocket socketServer;
     private ArrayList<ThreadServer> threadServers;
     private boolean checkDone = false;
+    private boolean checkNextSong = false;
 
     public ServerCentral() throws IOException {
         core = UnicornCore.getUnicornCore();
@@ -95,20 +96,26 @@ public class ServerCentral extends Thread implements ActionServer{
     }
 
     @Override
-    public void launchNextSong(Track track) throws InterruptedException, IOException {
-        sendToAllWithReset(new Message("GameStart", track));
+    public synchronized void launchNextSong(Track track) throws InterruptedException, IOException {
+        if (!this.checkNextSong) {
+            sendToAllWithReset(new Message("GameStart", track));
+            checkNextSong = true;
+        }
     }
 
     @Override
-    public void checkProposition(String s, ThreadServer ts) throws IOException {
-        if(core.handleProposition(s, ts.getPlayer().getIdPlayer()))
+    public synchronized void checkProposition(String s, ThreadServer ts) throws IOException {
+        if(core.handleProposition(s, ts.getPlayer().getIdPlayer())){
             this.sendToAll(new Message("roundWinner", ts.getPlayer()));
+            this.checkNextSong = false;
+        }
+
         else
             ts.sendMessage(new Message("Perdu", null));
     }
 
     @Override
-    public void checkReady() throws IOException {
+    public synchronized void checkReady() throws IOException {
         if (UnicornCore.getUnicornCore().checkIfAllReady()){
             if (!this.checkDone) {
                 System.out.println("PLAYER ARE ALL READY");
