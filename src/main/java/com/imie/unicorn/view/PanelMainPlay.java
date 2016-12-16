@@ -119,7 +119,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     }
 
     public void stopThread(){
-        progressThread.interrupt();
+        progressThread.stop();
     }
 
     class Traitement implements Runnable{
@@ -131,7 +131,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
             try {
                 JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Personne n'a gagne");
                 JFenetre.getInstance().trackFinish(currentTrack);
-                JFenetre.getInstance().getClient().getPlayerMp3().kill();
+                playerMp3.kill();
                 JFenetre.getInstance().getClient().sendMessage(new Message("noWinner", null));
             } catch (IOException e) {
                 e.printStackTrace();

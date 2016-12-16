@@ -75,6 +75,7 @@ public class Client {
             Player winner =(Player) message.getValue();
             JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Le Gagnant est : "+winner.getPseudo());
             JFenetre.getInstance().trackFinish(currentTrack);
+            sendMessage(new Message("noWinner", null));
         } else if (message.getKey().equals("Deconnexion")){
             out.close();
             in.close();

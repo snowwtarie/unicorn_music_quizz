@@ -134,7 +134,6 @@ public class JFenetre extends JFrame implements WindowListener {
         getPanelBorder().getPanelCardMain().getPanelMainPlay().stopThread();
         getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().newInfoTrack(currentTrack);
         getPanelBorder().getPanelCardMain().cardLayout.show(PanelBorder.getPanelCardMain(), "infosTrack");
-
     }
 
     public void gameFinish() throws IOException {
