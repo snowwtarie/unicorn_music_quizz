@@ -15,15 +15,12 @@ import java.io.IOException;
 
 public class PanelMainPlay extends JPanel implements ActionListener, KeyListener, FocusListener {
     private JProgressBar bar;
-    private static JTextField jProposition = new JTextField();
-    private JButton jButton = new JButton("Confirmer");
-    private JPanel progress = new JPanel();
-    private JPanel propositionPan = new JPanel();
-    private JLabel label = new JLabel("", SwingConstants.CENTER);
-
-
-
-    private JLabel wrongProp = new JLabel("", SwingConstants.CENTER);
+    private static JTextField jProposition;
+    private JButton jButton;
+    private JPanel progress;
+    private JPanel propositionPan;
+    private JLabel label;
+    private JLabel wrongProp;
     private Thread progressThread;
     private Track currentTrack;
 
@@ -32,30 +29,20 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     }
 
     public PanelMainPlay(){
-    }
 
-    public void initPanelMainPlay(Track currentTrack) throws IOException {
+        this.jProposition =  new JTextField();
+        this.jButton  = new JButton("Confirmer");
+        this.progress = new JPanel();
+        this.propositionPan = new JPanel();
+        this.label =  new JLabel("", SwingConstants.CENTER);
+        this.wrongProp = new JLabel();
+        this.bar = new JProgressBar();
+        bar.setMaximum(30);
+
         //Track currentTrack = JFenetre.getInstance().getClient().getCurrentTrack();
-        this.currentTrack = currentTrack;
-        this.progressThread = new Thread(new Traitement());
-        int numberSong = currentTrack.getId();
-        label.setText("Chanson "+numberSong+"/25");
+
+
         label.setFont(JFenetre.robotoFont.deriveFont(25f));
-
-        UIManager.put("ProgressBar.background", Color.GRAY );
-        UIManager.put("ProgressBar.foreground", Color.RED);
-        UIManager.put("ProgressBar.selectionBackground", Color.BLACK);
-        UIManager.put("ProgressBar.selectionForeground", Color.WHITE);
-
-
-        bar = new JProgressBar();
-        bar.setMaximum(3000);
-        bar.setMinimum(0);
-        bar. setStringPainted (true);
-        bar.setPreferredSize(new Dimension(100,50));
-        bar.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        bar.setBackground(Color.WHITE);
-
 
         wrongProp.setFont(JFenetre.unicornFont.deriveFont(25f));
         wrongProp.setForeground(Color.RED);
@@ -84,8 +71,6 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         jProposition.addFocusListener(this);
         jProposition.setFont(JFenetre.robotoFont.deriveFont(20f));
 
-
-
         propositionPan.setLayout(new BorderLayout());
         propositionPan.setPreferredSize(new DimensionUIResource(200, 100));
         propositionPan.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -99,10 +84,18 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         this.add(propositionPan, BorderLayout.SOUTH);
         jButton. addActionListener(this);
         this.setVisible(true);
+
+    }
+
+    public void initPanelMainPlay(Track currentTrack) throws IOException {
+        this.currentTrack = currentTrack;
+        this.bar.setValue(0);
+        this.progressThread = new Thread(new Traitement());
+        int numberSong = currentTrack.getId();
+        label.setText("Chanson "+numberSong+" / 25");
     }
 
     public void refreshPanelMainPlay(Track currentTrack) throws IOException {
-        this.removeAll();
         initPanelMainPlay(currentTrack);
         this.repaint();
         this.revalidate();
@@ -118,9 +111,9 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
 
     class Traitement implements Runnable{
         public void run(){
-            for ( int val = 0; val <= 3000; val++){
+            for ( int val = 0; val <= 30; val++){
                 bar.setValue( val ) ;
-                try {Thread.sleep(10);} catch ( InterruptedException e) {}
+                try {Thread.sleep(1000);} catch ( InterruptedException e) {}
             }
             try {
                 JFenetre.getInstance().trackFinish(currentTrack);
