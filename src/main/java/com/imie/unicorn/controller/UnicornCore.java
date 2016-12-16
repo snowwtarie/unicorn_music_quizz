@@ -146,7 +146,7 @@ public class UnicornCore {
     }
 
     public HashMap<String, Player> getPlayerList() {
-        return playerList;
+        return this.playerList;
     }
 
     public void addPlayer(Player player){

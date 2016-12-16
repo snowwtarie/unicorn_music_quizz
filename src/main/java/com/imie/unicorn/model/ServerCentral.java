@@ -18,6 +18,7 @@ public class ServerCentral extends Thread implements ActionServer{
     private UnicornCore core;
     private final ServerSocket socketServer;
     private ArrayList<ThreadServer> threadServers;
+    private boolean checkDone = false;
 
     public ServerCentral() throws IOException {
         core = UnicornCore.getUnicornCore();
@@ -104,5 +105,17 @@ public class ServerCentral extends Thread implements ActionServer{
             this.sendToAll(new Message("roundWinner", ts.getPlayer()));
         else
             ts.sendMessage(new Message("Perdu", null));
+    }
+
+    @Override
+    public void checkReady() throws IOException {
+        if (UnicornCore.getUnicornCore().checkIfAllReady()){
+            if (!this.checkDone) {
+                System.out.println("PLAYER ARE ALL READY");
+                Track track = getCurrentTrack();
+                sendToAllWithReset(new Message("GameStart", track));
+                checkDone = true;
+            }
+        }
     }
 }

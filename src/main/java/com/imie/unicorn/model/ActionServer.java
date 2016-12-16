@@ -30,4 +30,6 @@ public interface ActionServer {
         void launchNextSong(Track track) throws InterruptedException, IOException;
 
         void checkProposition(String s, ThreadServer ts) throws IOException;
+
+        void checkReady() throws IOException;
 }

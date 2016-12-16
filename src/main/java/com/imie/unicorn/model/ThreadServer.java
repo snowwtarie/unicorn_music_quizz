@@ -58,11 +58,7 @@ public class ThreadServer extends  Thread {
             System.out.println("Ready");
             System.out.println("Server : checking if all players ready...");
             actionServer.sendToAllWithReset(new Message("refreshListPlayer", actionServer.getListPlayers()));
-            if (UnicornCore.getUnicornCore().checkIfAllReady()){
-                System.out.println("PLAYER ARE ALL READY");
-                Track track = actionServer.getCurrentTrack();
-                actionServer.sendToAllWithReset(new Message("GameStart", track));
-            }
+            actionServer.checkReady();
         } else if (message.getKey().equals("noWinner")) {
             try {
                 actionServer.waitForNextSong();
