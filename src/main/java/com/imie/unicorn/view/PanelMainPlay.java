@@ -116,10 +116,10 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
                 try {Thread.sleep(1000);} catch ( InterruptedException e) {}
             }
             try {
+                JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Personne n'a gagne");
                 JFenetre.getInstance().trackFinish(currentTrack);
                 JFenetre.getInstance().getClient().getPlayerMp3().kill();
                 JFenetre.getInstance().getClient().sendMessage(new Message("noWinner", null));
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
