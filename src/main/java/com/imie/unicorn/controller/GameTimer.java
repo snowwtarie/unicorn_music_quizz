@@ -33,6 +33,6 @@ public class GameTimer extends Thread {
             e.printStackTrace();
         }
 
-        this.interrupt();
+        //this.interrupt();
     }
 }
