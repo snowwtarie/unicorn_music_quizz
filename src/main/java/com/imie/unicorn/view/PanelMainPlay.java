@@ -174,7 +174,6 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER){
             try {
-
                 JFenetre.getInstance().getClient().sendMessage(new Message("Proposition", jProposition.getText()));
             } catch (IOException e1) {
                 e1.printStackTrace();

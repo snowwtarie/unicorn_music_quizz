@@ -16,7 +16,7 @@ public class UnicornCore {
     private HashMap<String, Player> playerList;
     private ArrayList<Track> listTrack;
     private Track currentTrack;
-    private static final long idPlaylist = 2511342804l;
+    private static final long idPlaylist = 1260491931l;
     public boolean isCoreReady;
     private GameTimer trackTimer;
     private Score score;
@@ -63,7 +63,7 @@ public class UnicornCore {
         System.out.println("UnicornCore : getting track list by deezer API...");
         DeezerAPI deezerAPI = new DeezerAPI(idPlaylist);
         this.listTrack = deezerAPI.getListTrack();
-        this.currentTrack = listTrack.get(1);
+        this.currentTrack = listTrack.get(0);
     }
 
     public boolean checkIfAllReady(){
@@ -79,25 +79,23 @@ public class UnicornCore {
 
 
     public Boolean handleProposition(String proposition, String idPlayer){
-        if(!checkProposition("artist", proposition)){
-            if(!checkProposition("title", proposition)){
-                System.out.println("perdu");
-                return false;
-            }
+        if (proposition.equals("")){
+            return false;
         }
-        else {
-                System.out.println("Gagné ! + 1 point ! t'es un gagnant Serge...");
-                int actualScore = playerList.get(idPlayer).getScore();
-                playerList.get(idPlayer).setScore(actualScore + 1);
-                return true;
-            }
-        return false;
+        if(checkProposition("artist", proposition) || checkProposition("title", proposition)) {
+            System.out.println("Gagné ! + 1 point ! t'es un gagnant Serge...");
+            int actualScore = playerList.get(idPlayer).getScore();
+            playerList.get(idPlayer).setScore(actualScore + 1);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean checkProposition(String artisteOrTitle, String proposition){
         String response;
 
-        if(artisteOrTitle == "artist"){
+        if(artisteOrTitle.equals("artist")){
             response = currentTrack.getArtist();
             //response = "Big Brown Eyes";
         }

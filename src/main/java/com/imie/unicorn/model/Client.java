@@ -72,10 +72,10 @@ public class Client {
             JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainPlay().getWrongProp().setText("FAUX");
             JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Personne n'a gagne");
         } else if (message.getKey().equals("roundWinner")) {
+            JFenetre.getInstance().getClient().getPlayerMp3().kill();
             Player winner =(Player) message.getValue();
             JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Le Gagnant est : "+winner.getPseudo());
             JFenetre.getInstance().trackFinish(currentTrack);
-            JFenetre.getInstance().getClient().getPlayerMp3().kill();
         } else if (message.getKey().equals("Deconnexion")){
             out.close();
             in.close();

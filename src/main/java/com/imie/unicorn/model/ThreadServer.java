@@ -57,6 +57,7 @@ public class ThreadServer extends  Thread {
             UnicornCore.getUnicornCore().getPlayerList().get(player.getIdPlayer()).setIsReady(true);
             System.out.println("Ready");
             System.out.println("Server : checking if all players ready...");
+            actionServer.sendToAllWithReset(new Message("refreshListPlayer", actionServer.getListPlayers()));
             if (UnicornCore.getUnicornCore().checkIfAllReady()){
                 System.out.println("PLAYER ARE ALL READY");
                 Track track = actionServer.getCurrentTrack();
