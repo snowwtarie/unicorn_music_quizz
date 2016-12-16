@@ -25,6 +25,16 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
     private Thread progressThread;
     private Track currentTrack;
 
+    public PlayerMp3 getPlayerMp3() {
+        return playerMp3;
+    }
+
+    public void setPlayerMp3(PlayerMp3 playerMp3) {
+        this.playerMp3 = playerMp3;
+    }
+
+    private PlayerMp3 playerMp3;
+
     public static JTextField getProposition() {
         return jProposition;
     }
@@ -92,7 +102,7 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         this.currentTrack = currentTrack;
         this.bar.setValue(0);
         this.progressThread = new Thread(new Traitement());
-        PlayerMp3 playerMp3 = new PlayerMp3(currentTrack);
+        playerMp3 = new PlayerMp3(currentTrack);
         playerMp3.start();
         int numberSong = currentTrack.getId();
         label.setText("Chanson "+numberSong+" / 25");
