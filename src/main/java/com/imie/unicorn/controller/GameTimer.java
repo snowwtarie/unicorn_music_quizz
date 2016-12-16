@@ -29,10 +29,10 @@ public class GameTimer extends Thread {
         try {
             UnicornCore.getUnicornCore().nextTrack();
             serverCentral.launchNextSong(UnicornCore.getUnicornCore().getCurrentTrack());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
+
+        this.interrupt();
     }
 }
