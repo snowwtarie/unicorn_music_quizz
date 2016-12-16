@@ -1,6 +1,7 @@
 package com.imie.unicorn.view;
 
 
+import com.imie.unicorn.controller.PlayerMp3;
 import com.imie.unicorn.controller.Track;
 
 import javax.swing.*;
@@ -91,6 +92,8 @@ public class PanelMainPlay extends JPanel implements ActionListener, KeyListener
         this.currentTrack = currentTrack;
         this.bar.setValue(0);
         this.progressThread = new Thread(new Traitement());
+        PlayerMp3 playerMp3 = new PlayerMp3(currentTrack);
+        playerMp3.start();
         int numberSong = currentTrack.getId();
         label.setText("Chanson "+numberSong+" / 25");
     }

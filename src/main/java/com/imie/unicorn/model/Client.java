@@ -65,14 +65,13 @@ public class Client {
         } else if (message.getKey().equals("GameStart")) {
             JFenetre.getInstance().switchtoGame((Track) message.getValue());
             this.currentTrack = (Track) message.getValue();
-            playerMp3 = new PlayerMp3((Track) message.getValue());
-            playerMp3.start();
             System.out.println(currentTrack.getArtist()+" "+currentTrack.getTitle());
         } else if (message.getKey().equals("Perdu")) {
             JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainPlay().getWrongProp().setText("FAUX");
             JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Personne n'a gagne");
         } else if (message.getKey().equals("roundWinner")) {
             JFenetre.getInstance().getClient().getPlayerMp3().kill();
+            JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainPlay().stopThread();
             Player winner =(Player) message.getValue();
             JFenetre.getInstance().getPanelBorder().getPanelCardMain().getPanelMainInfoTrack().getMessage().setText("Le Gagnant est : "+winner.getPseudo());
             JFenetre.getInstance().trackFinish(currentTrack);

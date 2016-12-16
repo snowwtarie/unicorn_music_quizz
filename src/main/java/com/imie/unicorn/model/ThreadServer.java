@@ -61,7 +61,7 @@ public class ThreadServer extends  Thread {
             if (UnicornCore.getUnicornCore().checkIfAllReady()){
                 System.out.println("PLAYER ARE ALL READY");
                 Track track = actionServer.getCurrentTrack();
-                sendMessageWithReset(new Message("GameStart", track));
+                actionServer.sendToAllWithReset(new Message("GameStart", track));
             }
         } else if (message.getKey().equals("noWinner")) {
             try {
